@@ -17,8 +17,11 @@
         {{ game.score }}
       </div>
 
-      <!-- Platform badge overlay -->
-      <span class="platform-chip">{{ game.platform }}</span>
+      <!-- Platform badge overlay with platform-aware style -->
+      <span class="platform-chip" :class="platformClass">
+        <span class="platform-dot"></span>
+        {{ game.platform }}
+      </span>
     </div>
 
     <div class="card-content">
@@ -80,6 +83,16 @@ const scoreColor = computed(() => {
   if (props.game.score >= 50) return '#eab308'
   if (props.game.score >= 25) return '#f97316'
   return '#ef4444'
+})
+
+const platformClass = computed(() => {
+  const p = (props.game.platform || '').toLowerCase()
+  if (p.includes('switch 2')) return 'plat-switch2'
+  if (p.includes('switch')) return 'plat-switch'
+  if (p.includes('pc')) return 'plat-pc'
+  if (p.includes('ps5') || p.includes('playstation')) return 'plat-ps'
+  if (p.includes('xbox')) return 'plat-xbox'
+  return 'plat-default'
 })
 
 function formatDate(dateStr) {
@@ -162,14 +175,65 @@ function formatDate(dateStr) {
   bottom: 10px;
   left: 12px;
   font-size: 0.72rem;
-  font-weight: 600;
-  background: rgba(10, 12, 16, 0.85);
-  backdrop-filter: blur(4px);
+  font-weight: 700;
+  background: rgba(10, 12, 16, 0.88);
+  backdrop-filter: blur(6px);
   color: #e2e8f0;
-  padding: 3px 8px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.platform-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #94a3b8;
+}
+
+.plat-switch2 {
+  border-color: rgba(244, 63, 94, 0.4);
+  color: #fda4af;
+}
+.plat-switch2 .platform-dot {
+  background: #f43f5e;
+  box-shadow: 0 0 8px #f43f5e;
+}
+
+.plat-switch {
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+}
+.plat-switch .platform-dot {
+  background: #ef4444;
+}
+
+.plat-pc {
+  border-color: rgba(56, 189, 248, 0.35);
+  color: #7dd3fc;
+}
+.plat-pc .platform-dot {
+  background: #38bdf8;
+}
+
+.plat-ps {
+  border-color: rgba(99, 102, 241, 0.35);
+  color: #a5b4fc;
+}
+.plat-ps .platform-dot {
+  background: #6366f1;
+}
+
+.plat-xbox {
+  border-color: rgba(34, 197, 94, 0.35);
+  color: #86efac;
+}
+.plat-xbox .platform-dot {
+  background: #22c55e;
 }
 
 .card-content {

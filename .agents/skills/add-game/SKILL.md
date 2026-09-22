@@ -17,7 +17,7 @@ Every entry in `public/games.json` has the following structure:
 {
   "id": "game-title-slug",
   "title": "Full Game Title",
-  "platform": "PC / Switch / PS5 / Xbox Series X / etc.",
+  "platform": "Switch 2 / PC / Nintendo Switch / PS5 / Xbox Series X / etc.",
   "genre": "Action RPG / Roguelike / Platformer / etc.",
   "coverUrl": "https://...",
   "hoursToFinish": 45,
@@ -47,9 +47,10 @@ Every entry in `public/games.json` has the following structure:
 ### Step 1: Collect Missing Details
 If the user didn't supply all details, ask for the missing ones:
 - **Title**: Exact name of the game.
-- **Score**: Number from 1 to 100.
+- **Platform**: e.g., Switch 2, PC, Nintendo Switch, PS5, Xbox Series X, etc.
 - **Hours to Finish**: Approximate playtime.
-- **Platform & Genre**: e.g., PC, Switch, PS5, etc. (optional/suggest based on game).
+- **Score**: Number from 1 to 100.
+- **Genre**: e.g., Action RPG, Roguelike, Platformer, etc. (optional/suggest based on game).
 - **Completion Date**: Default to today's date (`YYYY-MM-DD`) if not specified.
 - **Cover Image**: Direct image URL (offer to find one if needed).
 

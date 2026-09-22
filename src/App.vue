@@ -4,11 +4,21 @@
       <!-- Top header with stats -->
       <HeaderStats :games="allGames" />
 
-      <!-- Filter / Sort Bar -->
+      <!-- Filter / Sort Bar / Platform Bar / Add Game -->
       <SortControls 
         v-model:searchQuery="searchQuery" 
-        v-model:sortBy="sortBy" 
+        v-model:sortBy="sortBy"
+        v-model:selectedPlatform="selectedPlatform"
+        :platforms="availablePlatforms"
+        @open-add="showAddModal = true"
       />
+
+      <!-- Toast Notification -->
+      <Transition name="toast">
+        <div v-if="toastMessage" class="toast-notification">
+          <span>✨ {{ toastMessage }}</span>
+        </div>
+      </Transition>
 
       <!-- Loading State -->
       <div v-if="loading" class="loading-state">
@@ -34,6 +44,13 @@
         <p>© Nicolás Riedel • Games Tracker</p>
       </footer>
     </div>
+
+    <!-- Add Game Modal with Platform Field (Switch 2, PC, etc.) -->
+    <AddGameModal 
+      :show="showAddModal" 
+      @close="showAddModal = false"
+      @add="handleAddGame"
+    />
   </div>
 </template>
 
@@ -42,6 +59,7 @@ import { ref, computed, onMounted } from 'vue'
 import HeaderStats from './components/HeaderStats.vue'
 import SortControls from './components/SortControls.vue'
 import GameGrid from './components/GameGrid.vue'
+import AddGameModal from './components/AddGameModal.vue'
 
 const allGames = ref([])
 const loading = ref(true)
@@ -49,6 +67,9 @@ const error = ref(null)
 
 const searchQuery = ref('')
 const sortBy = ref('date-desc')
+const selectedPlatform = ref('')
+const showAddModal = ref(false)
+const toastMessage = ref('')
 
 async function fetchGames() {
   loading.value = true
@@ -58,8 +79,24 @@ async function fetchGames() {
     if (!res.ok) {
       throw new Error(`Error al cargar games.json (HTTP ${res.status})`)
     }
-    const data = await res.json()
-    allGames.value = data
+    const baseData = await res.json()
+    
+    // Check localStorage for any games added in-browser
+    const local = localStorage.getItem('local_custom_games')
+    let extraGames = []
+    if (local) {
+      try {
+        extraGames = JSON.parse(local)
+      } catch (e) {
+        console.error('Error parsing local_custom_games', e)
+      }
+    }
+
+    // Merge: unique by id
+    const existingIds = new Set(baseData.map(g => g.id))
+    const uniqueExtras = extraGames.filter(g => !existingIds.has(g.id))
+
+    allGames.value = [...uniqueExtras, ...baseData]
   } catch (err) {
     console.error('Error fetching games:', err)
     error.value = 'No se pudieron cargar los juegos. Por favor verifica public/games.json.'
@@ -68,10 +105,42 @@ async function fetchGames() {
   }
 }
 
+function handleAddGame(newGame) {
+  // Add to top of list
+  allGames.value.unshift(newGame)
+
+  // Persist to localStorage
+  const local = localStorage.getItem('local_custom_games')
+  let extraGames = []
+  if (local) {
+    try {
+      extraGames = JSON.parse(local)
+    } catch {}
+  }
+  extraGames.unshift(newGame)
+  localStorage.setItem('local_custom_games', JSON.stringify(extraGames))
+
+  // Show confirmation toast
+  toastMessage.value = `¡"${newGame.title}" (${newGame.platform}) agregado con éxito!`
+  setTimeout(() => {
+    toastMessage.value = ''
+  }, 4000)
+}
+
+const availablePlatforms = computed(() => {
+  const set = new Set()
+  allGames.value.forEach(g => {
+    if (g.platform) {
+      set.add(g.platform.trim())
+    }
+  })
+  return Array.from(set).sort()
+})
+
 const processedGames = computed(() => {
   let list = [...allGames.value]
 
-  // Filter
+  // Filter by search query
   if (searchQuery.value.trim()) {
     const q = searchQuery.value.toLowerCase().trim()
     list = list.filter(g => {
@@ -81,6 +150,11 @@ const processedGames = computed(() => {
         (g.genre && g.genre.toLowerCase().includes(q))
       )
     })
+  }
+
+  // Filter by platform
+  if (selectedPlatform.value) {
+    list = list.filter(g => g.platform && g.platform.trim() === selectedPlatform.value)
   }
 
   // Sort
@@ -128,6 +202,32 @@ onMounted(() => {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+}
+
+/* Toast */
+.toast-notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #10b981;
+  color: #042f2e;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  z-index: 2000;
+}
+
+.toast-enter-active,
+.toast-leave-active {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-enter-from,
+.toast-leave-to {
+  opacity: 0;
+  transform: translateY(12px) scale(0.95);
 }
 
 /* States */
