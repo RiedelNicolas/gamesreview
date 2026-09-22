@@ -6,10 +6,10 @@
       </div>
       <div>
         <h1 class="header-title">
-          Nicolás <span class="gradient-text">Riedel</span>
+          Personal <span class="gradient-text">Game Review</span>
         </h1>
         <p class="header-subtitle">
-          Personal video game log, completion times & in-depth reviews.
+          Nicolás Riedel
         </p>
       </div>
     </div>
@@ -69,7 +69,9 @@ defineProps({
 
 .header-subtitle {
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   margin-top: 4px;
 }
 </style>
