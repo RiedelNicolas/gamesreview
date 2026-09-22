@@ -1,5 +1,5 @@
 <template>
-  <article class="game-card" @click="$emit('select', game)">
+  <article class="game-card">
     <div class="card-cover-container">
       <img 
         :src="game.coverUrl" 
@@ -26,40 +26,32 @@
       <h3 class="card-title" :title="game.title">{{ game.title }}</h3>
 
       <div class="card-meta">
-        <span class="meta-badge" title="Time to Finish">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="meta-item-badge" title="Horas jugadas">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
             <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
-          {{ game.hoursToFinish }}h
-        </span>
+          <span><strong class="highlight-val">{{ game.hoursToFinish }}</strong> hrs</span>
+        </div>
 
-        <span class="meta-badge" v-if="game.dateCompleted" title="Completion Date">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="meta-item-badge" v-if="game.dateCompleted" title="Fecha">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
             <line x1="16" y1="2" x2="16" y2="6"></line>
             <line x1="8" y1="2" x2="8" y2="6"></line>
             <line x1="3" y1="10" x2="21" y2="10"></line>
           </svg>
-          {{ formatDate(game.dateCompleted) }}
-        </span>
+          <span>{{ formatDate(game.dateCompleted) }}</span>
+        </div>
       </div>
 
-      <div class="card-score-bar">
+      <div class="card-score-section">
+        <div class="score-header-row">
+          <span class="score-row-label">Puntaje</span>
+          <span class="score-row-val" :style="{ color: scoreColor }">{{ game.score }}/100</span>
+        </div>
         <ScoreBar :score="game.score" :show-label="false" size="sm" />
       </div>
-
-      <p class="card-excerpt">
-        {{ excerpt }}
-      </p>
-
-      <button class="read-more-btn" @click.stop="$emit('select', game)">
-        Read Analysis
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
-      </button>
     </div>
   </article>
 </template>
@@ -75,8 +67,6 @@ const props = defineProps({
   }
 })
 
-defineEmits(['select'])
-
 const imageFailed = ref(false)
 
 function onImageError(e) {
@@ -90,13 +80,6 @@ const scoreColor = computed(() => {
   if (props.game.score >= 50) return '#eab308'
   if (props.game.score >= 25) return '#f97316'
   return '#ef4444'
-})
-
-const excerpt = computed(() => {
-  if (!props.game.review) return ''
-  const trimmed = props.game.review.trim()
-  if (trimmed.length <= 110) return trimmed
-  return trimmed.substring(0, 110) + '...'
 })
 
 function formatDate(dateStr) {
@@ -120,12 +103,11 @@ function formatDate(dateStr) {
   display: flex;
   flex-direction: column;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: pointer;
   box-shadow: var(--shadow-card);
 }
 
 .game-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   border-color: var(--border-hover);
   box-shadow: var(--shadow-hover);
   background: var(--bg-card-hover);
@@ -148,7 +130,7 @@ function formatDate(dateStr) {
 }
 
 .game-card:hover .card-cover {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 .fallback-cover {
@@ -166,10 +148,10 @@ function formatDate(dateStr) {
   top: 12px;
   right: 12px;
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: #0b0d13;
-  padding: 3px 9px;
+  padding: 3px 10px;
   border-radius: var(--radius-sm);
   letter-spacing: 0.02em;
   z-index: 2;
@@ -211,7 +193,7 @@ function formatDate(dateStr) {
   font-weight: 700;
   color: #fff;
   line-height: 1.3;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -221,51 +203,51 @@ function formatDate(dateStr) {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 12px;
-}
-
-.meta-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  font-family: var(--font-mono);
-}
-
-.card-score-bar {
-  margin-bottom: 12px;
-}
-
-.card-excerpt {
-  font-size: 0.86rem;
-  color: #94a3b8;
-  line-height: 1.5;
   margin-bottom: 16px;
-  flex-grow: 1;
 }
 
-.read-more-btn {
+.meta-item-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--accent-cyan);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.highlight-val {
+  color: #fff;
+  font-weight: 700;
+}
+
+.card-score-section {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.score-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.score-row-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   font-weight: 600;
-  padding: 6px 0;
-  transition: all 0.2s ease;
-  align-self: flex-start;
 }
 
-.read-more-btn svg {
-  transition: transform 0.2s ease;
-}
-
-.game-card:hover .read-more-btn {
-  color: #7dd3fc;
-}
-
-.game-card:hover .read-more-btn svg {
-  transform: translateX(4px);
+.score-row-val {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
 }
 </style>

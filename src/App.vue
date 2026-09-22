@@ -1,7 +1,7 @@
 <template>
   <div class="app-shell">
     <div class="main-wrapper">
-      <!-- Top header -->
+      <!-- Top header with stats -->
       <HeaderStats :games="allGames" />
 
       <!-- Filter / Sort Bar -->
@@ -13,34 +13,27 @@
       <!-- Loading State -->
       <div v-if="loading" class="loading-state">
         <div class="spinner"></div>
-        <p>Loading game reviews...</p>
+        <p>Cargando juegos...</p>
       </div>
 
       <!-- Error State -->
       <div v-else-if="error" class="error-state">
         <span class="error-icon">⚠️</span>
         <p>{{ error }}</p>
-        <button class="retry-btn" @click="fetchGames">Try Again</button>
+        <button class="retry-btn" @click="fetchGames">Reintentar</button>
       </div>
 
       <!-- Main Game Grid -->
       <GameGrid 
         v-else
         :games="processedGames" 
-        @select-game="openModal" 
       />
 
       <!-- Clean footer -->
       <footer class="app-footer">
-        <p>© Nicolás Riedel • Games Review</p>
+        <p>© Nicolás Riedel • Games Tracker</p>
       </footer>
     </div>
-
-    <!-- Review Modal -->
-    <ReviewModal 
-      :game="selectedGame" 
-      @close="closeModal" 
-    />
   </div>
 </template>
 
@@ -49,7 +42,6 @@ import { ref, computed, onMounted } from 'vue'
 import HeaderStats from './components/HeaderStats.vue'
 import SortControls from './components/SortControls.vue'
 import GameGrid from './components/GameGrid.vue'
-import ReviewModal from './components/ReviewModal.vue'
 
 const allGames = ref([])
 const loading = ref(true)
@@ -57,7 +49,6 @@ const error = ref(null)
 
 const searchQuery = ref('')
 const sortBy = ref('date-desc')
-const selectedGame = ref(null)
 
 async function fetchGames() {
   loading.value = true
@@ -65,13 +56,13 @@ async function fetchGames() {
   try {
     const res = await fetch('./games.json')
     if (!res.ok) {
-      throw new Error(`Failed to load games.json (HTTP ${res.status})`)
+      throw new Error(`Error al cargar games.json (HTTP ${res.status})`)
     }
     const data = await res.json()
     allGames.value = data
   } catch (err) {
     console.error('Error fetching games:', err)
-    error.value = 'Could not load your game reviews. Please check public/games.json.'
+    error.value = 'No se pudieron cargar los juegos. Por favor verifica public/games.json.'
   } finally {
     loading.value = false
   }
@@ -116,14 +107,6 @@ const processedGames = computed(() => {
 
   return list
 })
-
-function openModal(game) {
-  selectedGame.value = game
-}
-
-function closeModal() {
-  selectedGame.value = null
-}
 
 onMounted(() => {
   fetchGames()

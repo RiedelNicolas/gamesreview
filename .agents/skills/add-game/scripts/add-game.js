@@ -21,7 +21,7 @@ function slugify(text) {
 function main() {
   const args = process.argv.slice(2)
   if (args.length === 0) {
-    console.error('Usage: node add-game.js \'{"title": "...", "score": 90, ...}\'')
+    console.error('Usage: node add-game.js \'{"title": "...", "score": 90, "hoursToFinish": 30}\'')
     process.exit(1)
   }
 
@@ -66,8 +66,7 @@ function main() {
     hoursToFinish: Number(gameData.hoursToFinish) || 0,
     score: Number(gameData.score),
     status: gameData.status || 'completed',
-    dateCompleted: gameData.dateCompleted || new Date().toISOString().split('T')[0],
-    review: gameData.review ? gameData.review.trim() : ''
+    dateCompleted: gameData.dateCompleted || new Date().toISOString().split('T')[0]
   }
 
   // Check if game already exists by id

@@ -8,8 +8,7 @@
     "hoursToFinish": 95,
     "score": 96,
     "status": "completed",
-    "dateCompleted": "2024-03-18",
-    "review": "FromSoftware's crowning achievement in open-world game design. The Lands Between are staggering in scope, density, and artistic direction. Every corner of the map holds genuine surprises, bespoke encounters, and atmospheric dungeons that avoid repetitive checklist mechanics. The combat system builds upon Dark Souls III with the jumping mechanics and posture breaks from Sekiro. Boss fights like Malenia and Radahn pushed my patience, but victory remains uniquely exhilarating. A timeless milestone in action RPGs."
+    "dateCompleted": "2024-03-18"
   },
   {
     "id": "baldurs-gate-3",
@@ -20,8 +19,7 @@
     "hoursToFinish": 110,
     "score": 97,
     "status": "completed",
-    "dateCompleted": "2024-05-22",
-    "review": "A generational CRPG triumph by Larian Studios. The sheer freedom in tactical combat and dialogue reactivity is unparalleled in modern gaming. Characters like Shadowheart, Astarion, and Karlach feel alive, with narrative arcs that genuinely shift based on minor choices made dozens of hours prior. Act 3 can feel slightly overwhelming with density and minor performance hiccups, but the overall experience is one of the richest role-playing games ever crafted."
+    "dateCompleted": "2024-05-22"
   },
   {
     "id": "hades",
@@ -32,8 +30,7 @@
     "hoursToFinish": 38,
     "score": 93,
     "status": "completed",
-    "dateCompleted": "2024-07-10",
-    "review": "Supergiant Games perfected the loop of roguelike progression married to dynamic narrative storytelling. Dying never feels like wasted time; every return to the House of Hades moves relationships forward with Greek pantheon gods who are bursting with charisma. The boon synergy system makes each escape run feel distinct and snappy. Darren Korb's soundtrack and the vibrant comic-book art elevate this to pure bliss."
+    "dateCompleted": "2024-07-10"
   },
   {
     "id": "zelda-totk",
@@ -44,8 +41,7 @@
     "hoursToFinish": 85,
     "score": 94,
     "status": "completed",
-    "dateCompleted": "2024-08-30",
-    "review": "A marvel of physics engineering running on modest Switch hardware. The Ultrahand and Fuse abilities turn Hyrule into an interactive toybox without breaking the sense of adventure. Exploring the sky islands and descending into the eerie depths creates an extraordinary verticality. While some shrine puzzles can feel trivial with creative building, the sense of wonder and player agency is extraordinary."
+    "dateCompleted": "2024-08-30"
   },
   {
     "id": "celeste",
@@ -56,8 +52,7 @@
     "hoursToFinish": 14,
     "score": 90,
     "status": "completed",
-    "dateCompleted": "2024-09-14",
-    "review": "A masterclass in precision platforming that handles themes of anxiety, depression, and self-acceptance with incredible empathy. The controls are responsive and forgiving thanks to instantaneous respawns. Lena Raine's soundtrack is legendary. B-sides and C-sides provide a steep challenge for hardcore players while the assist mode ensures accessibility for anyone who wants to experience Madeline's journey."
+    "dateCompleted": "2024-09-14"
   },
   {
     "id": "cyberpunk-2077",
@@ -68,8 +63,7 @@
     "hoursToFinish": 62,
     "score": 88,
     "status": "completed",
-    "dateCompleted": "2024-11-05",
-    "review": "Night City finally reached its intended potential following the 2.0 overhaul and the Phantom Liberty expansion. Dogtown is dense, atmospheric, and provides a compelling spy-thriller storyline with standout performances from Idris Elba and Keanu Reeves. First-person combat flows smoothly with cyberware perks and relic upgrades. A redemption arc well worth experiencing."
+    "dateCompleted": "2024-11-05"
   },
   {
     "id": "metroid-dread",
@@ -80,8 +74,7 @@
     "hoursToFinish": 11,
     "score": 86,
     "status": "completed",
-    "dateCompleted": "2024-12-02",
-    "review": "Samus Aran's movement has never felt smoother or more lethal. MercurySteam nailed the sense of tension inside the E.M.M.I. zones, turning traditional exploration into high-stakes stealth chases. Boss fights require learning telegraphed patterns and reward swift parries. Slightly linear for a Metroidvania in its early hours, but the pacing and climactic sequence are fantastic."
+    "dateCompleted": "2024-12-02"
   },
   {
     "id": "silksong",
@@ -92,7 +85,6 @@
     "hoursToFinish": 45,
     "score": 95,
     "status": "completed",
-    "dateCompleted": "2025-01-20",
-    "review": "Hallownest is one of the most melancholic, beautifully realized subterranean worlds in all of gaming. The insect lore, tight nail combat, charm build customization, and Christopher Larkin's somber score weave together into pure magic. Exploring the City of Tears for the first time remains unforgettable."
+    "dateCompleted": "2025-01-20"
   }
 ]

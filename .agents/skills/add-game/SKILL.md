@@ -1,13 +1,13 @@
 ---
 name: add-game
 description: >-
-  Use this skill when the user wants to log, add, review, or register a new video game into public/games.json.
-  Covers gathering game metadata (title, platform, genre, score 1-100, hours, date, cover URL, and review analysis) and safely updating the collection.
+  Use this skill when the user wants to log, add, or register a new video game into public/games.json.
+  Covers gathering game metadata (title, platform, genre, score 1-100, hours, date, cover URL) without requiring reviews.
 ---
 
 # Add Game Skill
 
-Use this workflow whenever the user wants to add or update a video game in their personal review collection.
+Use this workflow whenever the user wants to add or update a video game in their personal games tracker.
 
 ## Data Schema Reference
 
@@ -23,8 +23,7 @@ Every entry in `public/games.json` has the following structure:
   "hoursToFinish": 45,
   "score": 92,
   "status": "completed",
-  "dateCompleted": "YYYY-MM-DD",
-  "review": "Detailed personal analysis and critical opinion..."
+  "dateCompleted": "YYYY-MM-DD"
 }
 ```
 
@@ -50,10 +49,9 @@ If the user didn't supply all details, ask for the missing ones:
 - **Title**: Exact name of the game.
 - **Score**: Number from 1 to 100.
 - **Hours to Finish**: Approximate playtime.
-- **Platform & Genre**: e.g., PC, Switch, PS5, etc.
+- **Platform & Genre**: e.g., PC, Switch, PS5, etc. (optional/suggest based on game).
 - **Completion Date**: Default to today's date (`YYYY-MM-DD`) if not specified.
 - **Cover Image**: Direct image URL (offer to find one if needed).
-- **Personal Analysis**: A short or long critical review.
 
 ### Step 2: Register Game Entry
 You can either:

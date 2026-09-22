@@ -2,8 +2,8 @@
   <div class="grid-container">
     <div v-if="games.length === 0" class="empty-state">
       <span class="empty-icon">🎮</span>
-      <h3>No games found</h3>
-      <p>Try adjusting your search query or add new games to <code>public/games.json</code>.</p>
+      <h3>No se encontraron juegos</h3>
+      <p>Prueba ajustando tu búsqueda o agrega nuevos juegos en <code>public/games.json</code>.</p>
     </div>
 
     <div v-else class="games-grid">
@@ -11,7 +11,6 @@
         v-for="game in games" 
         :key="game.id" 
         :game="game"
-        @select="$emit('select-game', game)"
       />
     </div>
   </div>
@@ -26,8 +25,6 @@ defineProps({
     required: true
   }
 })
-
-defineEmits(['select-game'])
 </script>
 
 <style scoped>

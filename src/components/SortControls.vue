@@ -10,14 +10,14 @@
         type="text" 
         :value="searchQuery" 
         @input="$emit('update:searchQuery', $event.target.value)"
-        placeholder="Filter games by title, platform or genre..."
+        placeholder="Buscar por título, plataforma o género..."
         class="search-input"
       />
       <button 
         v-if="searchQuery" 
         class="search-clear" 
         @click="$emit('update:searchQuery', '')"
-        aria-label="Clear filter"
+        aria-label="Limpiar filtro"
       >
         ✕
       </button>
@@ -26,7 +26,7 @@
     <div class="controls-right">
       <!-- Sort Selector -->
       <div class="sort-selector-wrap">
-        <label for="sort-select" class="sort-label">Sort by:</label>
+        <label for="sort-select" class="sort-label">Ordenar por:</label>
         <div class="select-container">
           <select 
             id="sort-select"
@@ -34,13 +34,13 @@
             @change="$emit('update:sortBy', $event.target.value)"
             class="sort-select"
           >
-            <option value="date-desc">Date (Newest First)</option>
-            <option value="date-asc">Date (Oldest First)</option>
-            <option value="score-desc">Score (Highest First)</option>
-            <option value="score-asc">Score (Lowest First)</option>
-            <option value="hours-desc">Playtime (Longest)</option>
-            <option value="hours-asc">Playtime (Shortest)</option>
-            <option value="title-asc">Title (A → Z)</option>
+            <option value="date-desc">Fecha (más reciente)</option>
+            <option value="date-asc">Fecha (más antigua)</option>
+            <option value="score-desc">Puntaje (mayor a menor)</option>
+            <option value="score-asc">Puntaje (menor a mayor)</option>
+            <option value="hours-desc">Horas (más jugadas)</option>
+            <option value="hours-asc">Horas (menos jugadas)</option>
+            <option value="title-asc">Título (A → Z)</option>
           </select>
           <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="6 9 12 15 18 9"></polyline>
