@@ -13,8 +13,15 @@
       </div>
 
       <!-- Quick score pill overlay -->
-      <div class="score-pill" :style="{ backgroundColor: scoreColor, boxShadow: `0 4px 15px ${scoreColor}40` }">
+      <div 
+        v-if="game.score > 0" 
+        class="score-pill" 
+        :style="{ backgroundColor: scoreColor, boxShadow: `0 4px 15px ${scoreColor}40` }"
+      >
         {{ game.score }}
+      </div>
+      <div v-else class="score-pill unrated-pill">
+        S/C
       </div>
 
       <!-- Platform badge overlay with platform-aware style -->
@@ -49,11 +56,20 @@
       </div>
 
       <div class="card-score-section">
-        <div class="score-header-row">
-          <span class="score-row-label">Puntaje</span>
-          <span class="score-row-val" :style="{ color: scoreColor }">{{ game.score }}/100</span>
-        </div>
-        <ScoreBar :score="game.score" :show-label="false" size="sm" />
+        <template v-if="game.score > 0">
+          <div class="score-header-row">
+            <span class="score-row-label">Puntaje</span>
+            <span class="score-row-val" :style="{ color: scoreColor }">{{ game.score }}/100</span>
+          </div>
+          <ScoreBar :score="game.score" :show-label="false" size="sm" />
+        </template>
+        <template v-else>
+          <div class="score-header-row">
+            <span class="score-row-label">Puntaje</span>
+            <span class="score-row-val unrated-label">Sin calificar</span>
+          </div>
+          <div class="unrated-bar"></div>
+        </template>
       </div>
     </div>
   </article>
@@ -98,9 +114,12 @@ const platformClass = computed(() => {
 function formatDate(dateStr) {
   if (!dateStr) return ''
   try {
-    const [year, month] = dateStr.split('-')
-    const d = new Date(year, month - 1)
-    return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short' })
+    const parts = dateStr.split('-')
+    if (parts.length >= 2) {
+      const d = new Date(parts[0], parts[1] - 1, parts[2] ? parts[2] : 1)
+      return d.toLocaleDateString('es-ES', { year: 'numeric', month: 'short' })
+    }
+    return dateStr
   } catch {
     return dateStr
   }
@@ -168,6 +187,15 @@ function formatDate(dateStr) {
   border-radius: var(--radius-sm);
   letter-spacing: 0.02em;
   z-index: 2;
+}
+
+.unrated-pill {
+  background: rgba(148, 163, 184, 0.2);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  box-shadow: none;
 }
 
 .platform-chip {
@@ -313,5 +341,18 @@ function formatDate(dateStr) {
   font-family: var(--font-mono);
   font-size: 0.82rem;
   font-weight: 700;
+}
+
+.unrated-label {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.unrated-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
 }
 </style>

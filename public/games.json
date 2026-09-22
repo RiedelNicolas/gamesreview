@@ -1,90 +1,90 @@
 [
   {
-    "id": "elden-ring",
-    "title": "Elden Ring",
-    "platform": "PC",
-    "genre": "Action RPG / Souls-like",
-    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/co4jni.webp",
-    "hoursToFinish": 95,
-    "score": 96,
+    "id": "resident-evil-village",
+    "title": "Resident Evil Village",
+    "platform": "Nintendo Switch 2",
+    "genre": "Survival Horror / Action",
+    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/coab9q.webp",
+    "hoursToFinish": 10,
+    "score": 95,
     "status": "completed",
-    "dateCompleted": "2024-03-18"
+    "dateCompleted": "2026-04-28"
   },
   {
-    "id": "baldurs-gate-3",
-    "title": "Baldur's Gate 3",
-    "platform": "PC",
-    "genre": "CRPG / Turn-Based",
-    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/co670h.webp",
-    "hoursToFinish": 110,
-    "score": 97,
+    "id": "resident-evil-7-biohazard",
+    "title": "Resident Evil 7: Biohazard",
+    "platform": "Nintendo Switch 2",
+    "genre": "Survival Horror",
+    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/co9e29.webp",
+    "hoursToFinish": 15,
+    "score": 0,
     "status": "completed",
-    "dateCompleted": "2024-05-22"
+    "dateCompleted": "2026-03-29"
   },
   {
     "id": "hades",
     "title": "Hades",
-    "platform": "PC",
+    "platform": "Nintendo Switch",
     "genre": "Roguelike / Action",
     "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1r7f.webp",
-    "hoursToFinish": 38,
-    "score": 93,
-    "status": "completed",
-    "dateCompleted": "2024-07-10"
-  },
-  {
-    "id": "zelda-totk",
-    "title": "The Legend of Zelda: Tears of the Kingdom",
-    "platform": "Nintendo Switch",
-    "genre": "Action-Adventure",
-    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/co5vmg.webp",
-    "hoursToFinish": 85,
-    "score": 94,
-    "status": "completed",
-    "dateCompleted": "2024-08-30"
-  },
-  {
-    "id": "celeste",
-    "title": "Celeste",
-    "platform": "PC / Switch",
-    "genre": "Platformer",
-    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/co3byy.webp",
-    "hoursToFinish": 14,
-    "score": 90,
-    "status": "completed",
-    "dateCompleted": "2024-09-14"
-  },
-  {
-    "id": "cyberpunk-2077",
-    "title": "Cyberpunk 2077: Phantom Liberty",
-    "platform": "PC",
-    "genre": "Action RPG / Cyberpunk",
-    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/co70dt.webp",
-    "hoursToFinish": 62,
-    "score": 88,
-    "status": "completed",
-    "dateCompleted": "2024-11-05"
-  },
-  {
-    "id": "metroid-dread",
-    "title": "Metroid Dread",
-    "platform": "Nintendo Switch",
-    "genre": "Metroidvania",
-    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/co3904.webp",
     "hoursToFinish": 11,
-    "score": 86,
+    "score": 0,
     "status": "completed",
-    "dateCompleted": "2024-12-02"
+    "dateCompleted": "2026-03-12"
   },
   {
-    "id": "silksong",
-    "title": "Hollow Knight",
-    "platform": "PC",
-    "genre": "Metroidvania / Souls-like",
-    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1rba.webp",
-    "hoursToFinish": 45,
+    "id": "super-mario-galaxy",
+    "title": "Super Mario Galaxy",
+    "platform": "Nintendo Switch",
+    "genre": "3D Platformer",
+    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/co21ro.webp",
+    "hoursToFinish": 15.5,
     "score": 95,
     "status": "completed",
-    "dateCompleted": "2025-01-20"
+    "dateCompleted": "2026-02-22"
+  },
+  {
+    "id": "cyberpunk-2077-ultimate-edition",
+    "title": "Cyberpunk 2077: Ultimate Edition",
+    "platform": "Nintendo Switch 2",
+    "genre": "Action RPG / Open World",
+    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/coaih8.webp",
+    "hoursToFinish": 75,
+    "score": 90,
+    "status": "completed",
+    "dateCompleted": "2026-01-04"
+  },
+  {
+    "id": "donkey-kong-bananza",
+    "title": "Donkey Kong Bananza",
+    "platform": "Nintendo Switch 2",
+    "genre": "3D Platformer / Adventure",
+    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/cobd1q.jpg",
+    "hoursToFinish": 20,
+    "score": 95,
+    "status": "completed",
+    "dateCompleted": "2025-11-22"
+  },
+  {
+    "id": "zelda-breath-of-the-wild",
+    "title": "The Legend of Zelda: Breath of the Wild",
+    "platform": "Nintendo Switch 2",
+    "genre": "Action-Adventure / Open World",
+    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.webp",
+    "hoursToFinish": 55,
+    "score": 100,
+    "status": "completed",
+    "dateCompleted": "2025-11-22"
+  },
+  {
+    "id": "zelda-links-awakening",
+    "title": "The Legend of Zelda: Link's Awakening",
+    "platform": "Nintendo Switch 2",
+    "genre": "Action-Adventure",
+    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/co1qve.webp",
+    "hoursToFinish": 20,
+    "score": 90,
+    "status": "completed",
+    "dateCompleted": "2025-11-22"
   }
 ]

@@ -42,13 +42,16 @@ const props = defineProps({
 })
 
 const totalHours = computed(() => {
-  return props.games.reduce((acc, g) => acc + (Number(g.hoursToFinish) || 0), 0)
+  const sum = props.games.reduce((acc, g) => acc + (Number(g.hoursToFinish) || 0), 0)
+  return Math.round(sum * 10) / 10
 })
 
 const avgScore = computed(() => {
   if (!props.games.length) return 0
-  const total = props.games.reduce((acc, g) => acc + (Number(g.score) || 0), 0)
-  return Math.round(total / props.games.length)
+  const rated = props.games.filter(g => Number(g.score) > 0)
+  if (!rated.length) return 0
+  const total = rated.reduce((acc, g) => acc + (Number(g.score) || 0), 0)
+  return Math.round(total / rated.length)
 })
 </script>
 
