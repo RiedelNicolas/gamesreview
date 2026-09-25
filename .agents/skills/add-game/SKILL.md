@@ -17,7 +17,7 @@ Every entry in `public/games.json` has the following structure:
 {
   "id": "game-title-slug",
   "title": "Full Game Title",
-  "platform": "Switch 2 / PC / Nintendo Switch / PS5 / Xbox Series X / etc.",
+  "platform": "Nintendo Switch 2 / Nintendo Switch / PC / PS5 / Xbox Series X / etc.",
   "genre": "Action RPG / Roguelike / Platformer / etc.",
   "coverUrl": "https://...",
   "artwork": "https://... (optional)",
@@ -55,7 +55,7 @@ Always open the image and check it shows the right game before saving it.
 ### Step 1: Collect Missing Details
 If the user didn't supply all details, ask for the missing ones:
 - **Title**: Exact name of the game.
-- **Platform**: e.g., Switch 2, PC, Nintendo Switch, PS5, Xbox Series X, etc.
+- **Platform**: e.g., Nintendo Switch 2, Nintendo Switch, PC, PS5, Xbox Series X, etc. Reuse the exact name already in `games.json` (each distinct name becomes its own filter tab).
 - **Hours to Finish**: Approximate playtime.
 - **Score**: Number from 1 to 100.
 - **Genre**: e.g., Action RPG, Roguelike, Platformer, etc. (optional/suggest based on game).

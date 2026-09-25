@@ -27,7 +27,7 @@
               />
             </div>
 
-            <!-- Platform Field (Switch 2, PC, etc.) -->
+            <!-- Platform -->
             <div class="form-group">
               <label class="form-label">Platform <span class="req">*</span></label>
               <div class="presets">
@@ -47,7 +47,7 @@
                 v-model="form.platform" 
                 type="text" 
                 required 
-                placeholder="Or type a custom platform (e.g. Switch 2, PC, PS5)" 
+                placeholder="Or type another platform" 
                 class="form-input mt-2"
               />
             </div>
@@ -156,11 +156,11 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'add'])
 
-const presetPlatforms = ['Switch 2', 'PC', 'Nintendo Switch', 'PS5', 'Xbox Series X']
+const presetPlatforms = ['Nintendo Switch 2', 'Nintendo Switch', 'PC', 'PS5', 'Xbox Series X']
 
 const form = ref({
   title: '',
-  platform: 'Switch 2',
+  platform: 'Nintendo Switch 2',
   hoursToFinish: null,
   score: null,
   genre: 'General',
@@ -172,7 +172,7 @@ watch(() => props.show, (isShown) => {
   if (isShown) {
     form.value = {
       title: '',
-      platform: 'Switch 2',
+      platform: 'Nintendo Switch 2',
       hoursToFinish: null,
       score: null,
       genre: '',
