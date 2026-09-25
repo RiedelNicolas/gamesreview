@@ -2,6 +2,17 @@ import { ref, computed } from 'vue'
 
 const STORAGE_KEY = 'local_custom_games'
 
+// Legacy platform names mapped to the names used in games.json.
+// Applied when games are loaded; stored data is left as is.
+export const PLATFORM_ALIASES = {
+  'Switch 2': 'Nintendo Switch 2'
+}
+
+function normalizePlatform(game) {
+  const platform = game.platform && game.platform.trim()
+  return PLATFORM_ALIASES[platform] ? { ...game, platform: PLATFORM_ALIASES[platform] } : game
+}
+
 function readLocalGames() {
   const local = localStorage.getItem(STORAGE_KEY)
   if (!local) return []
@@ -36,7 +47,7 @@ export function useGames() {
       const existingIds = new Set(baseData.map(g => g.id))
       const uniqueExtras = readLocalGames().filter(g => !existingIds.has(g.id))
 
-      allGames.value = [...uniqueExtras, ...baseData]
+      allGames.value = [...uniqueExtras, ...baseData].map(normalizePlatform)
     } catch (err) {
       console.error('Error fetching games:', err)
       error.value = 'Could not load games. Check public/games.json.'
