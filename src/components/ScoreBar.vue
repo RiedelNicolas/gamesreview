@@ -6,13 +6,13 @@
         <span class="score-max">/100</span>
       </div>
       <span v-if="showLabel" class="score-label" :style="{ color: scoreColorText }">
-        {{ scoreLabel }}
+        {{ label }}
       </span>
     </div>
     <div class="score-track">
       <div 
         class="score-fill" 
-        :style="{ width: `${score}%`, backgroundColor: scoreColorText, boxShadow: `0 0 10px ${scoreColorText}66` }"
+        :style="{ width: `${score}%`, backgroundColor: scoreColorText, boxShadow: `0 0 10px color-mix(in srgb, ${scoreColorText} 40%, transparent)` }"
       ></div>
     </div>
   </div>
@@ -20,6 +20,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import { scoreColor, scoreLabel } from '../utils/score.js'
 
 const props = defineProps({
   score: {
@@ -40,24 +41,12 @@ const props = defineProps({
 
 const sizeClass = computed(() => `size-${props.size}`)
 
-const scoreColorText = computed(() => {
-  if (props.score >= 90) return '#10b981' // Green/Emerald
-  if (props.score >= 75) return '#06b6d4' // Cyan/Blue
-  if (props.score >= 50) return '#eab308' // Yellow
-  if (props.score >= 25) return '#f97316' // Orange
-  return '#ef4444'                        // Red
-})
+const scoreColorText = computed(() => scoreColor(props.score))
 
-const scoreColorBg = computed(() => `${scoreColorText.value}18`)
-const scoreColorBorder = computed(() => `${scoreColorText.value}40`)
+const scoreColorBg = computed(() => `color-mix(in srgb, ${scoreColorText.value} 9%, transparent)`)
+const scoreColorBorder = computed(() => `color-mix(in srgb, ${scoreColorText.value} 25%, transparent)`)
 
-const scoreLabel = computed(() => {
-  if (props.score >= 90) return 'Masterpiece'
-  if (props.score >= 75) return 'Great'
-  if (props.score >= 50) return 'Decent'
-  if (props.score >= 25) return 'Mediocre'
-  return 'Flawed'
-})
+const label = computed(() => scoreLabel(props.score))
 </script>
 
 <style scoped>

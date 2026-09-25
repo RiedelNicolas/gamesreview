@@ -16,7 +16,7 @@
       <div 
         v-if="game.score > 0" 
         class="score-pill" 
-        :style="{ backgroundColor: scoreColor, boxShadow: `0 4px 15px ${scoreColor}40` }"
+        :style="{ backgroundColor: scoreColor, boxShadow: `0 4px 15px color-mix(in srgb, ${scoreColor} 25%, transparent)` }"
       >
         {{ game.score }}
       </div>
@@ -78,6 +78,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import ScoreBar from './ScoreBar.vue'
+import { scoreColor as getScoreColor } from '../utils/score.js'
 
 const props = defineProps({
   game: {
@@ -93,13 +94,7 @@ function onImageError(e) {
   e.target.style.display = 'none'
 }
 
-const scoreColor = computed(() => {
-  if (props.game.score >= 90) return '#10b981'
-  if (props.game.score >= 75) return '#06b6d4'
-  if (props.game.score >= 50) return '#eab308'
-  if (props.game.score >= 25) return '#f97316'
-  return '#ef4444'
-})
+const scoreColor = computed(() => getScoreColor(props.game.score))
 
 const platformClass = computed(() => {
   const p = (props.game.platform || '').toLowerCase()

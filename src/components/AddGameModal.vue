@@ -147,6 +147,7 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
+import { scoreColor as getScoreColor } from '../utils/score.js'
 
 const props = defineProps({
   show: {
@@ -183,14 +184,7 @@ watch(() => props.show, (isShown) => {
   }
 })
 
-const scoreColor = computed(() => {
-  const s = Number(form.value.score) || 0
-  if (s >= 90) return '#10b981'
-  if (s >= 75) return '#06b6d4'
-  if (s >= 50) return '#eab308'
-  if (s >= 25) return '#f97316'
-  return '#ef4444'
-})
+const scoreColor = computed(() => getScoreColor(form.value.score))
 
 function slugify(text) {
   return text

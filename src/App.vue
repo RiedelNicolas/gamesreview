@@ -55,70 +55,31 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import HeaderStats from './components/HeaderStats.vue'
 import SortControls from './components/SortControls.vue'
 import GameGrid from './components/GameGrid.vue'
 import AddGameModal from './components/AddGameModal.vue'
+import { useGames } from './composables/useGames.js'
 
-const allGames = ref([])
-const loading = ref(true)
-const error = ref(null)
+const {
+  allGames,
+  loading,
+  error,
+  searchQuery,
+  sortBy,
+  selectedPlatform,
+  availablePlatforms,
+  processedGames,
+  fetchGames,
+  addGame
+} = useGames()
 
-const searchQuery = ref('')
-const sortBy = ref('date-desc')
-const selectedPlatform = ref('')
 const showAddModal = ref(false)
 const toastMessage = ref('')
 
-async function fetchGames() {
-  loading.value = true
-  error.value = null
-  try {
-    const res = await fetch('./games.json')
-    if (!res.ok) {
-      throw new Error(`Error al cargar games.json (HTTP ${res.status})`)
-    }
-    const baseData = await res.json()
-    
-    // Check localStorage for any games added in-browser
-    const local = localStorage.getItem('local_custom_games')
-    let extraGames = []
-    if (local) {
-      try {
-        extraGames = JSON.parse(local)
-      } catch (e) {
-        console.error('Error parsing local_custom_games', e)
-      }
-    }
-
-    // Merge: unique by id
-    const existingIds = new Set(baseData.map(g => g.id))
-    const uniqueExtras = extraGames.filter(g => !existingIds.has(g.id))
-
-    allGames.value = [...uniqueExtras, ...baseData]
-  } catch (err) {
-    console.error('Error fetching games:', err)
-    error.value = 'No se pudieron cargar los juegos. Por favor verifica public/games.json.'
-  } finally {
-    loading.value = false
-  }
-}
-
 function handleAddGame(newGame) {
-  // Add to top of list
-  allGames.value.unshift(newGame)
-
-  // Persist to localStorage
-  const local = localStorage.getItem('local_custom_games')
-  let extraGames = []
-  if (local) {
-    try {
-      extraGames = JSON.parse(local)
-    } catch {}
-  }
-  extraGames.unshift(newGame)
-  localStorage.setItem('local_custom_games', JSON.stringify(extraGames))
+  addGame(newGame)
 
   // Show confirmation toast
   toastMessage.value = `¡"${newGame.title}" (${newGame.platform}) agregado con éxito!`
@@ -126,61 +87,6 @@ function handleAddGame(newGame) {
     toastMessage.value = ''
   }, 4000)
 }
-
-const availablePlatforms = computed(() => {
-  const set = new Set()
-  allGames.value.forEach(g => {
-    if (g.platform) {
-      set.add(g.platform.trim())
-    }
-  })
-  return Array.from(set).sort()
-})
-
-const processedGames = computed(() => {
-  let list = [...allGames.value]
-
-  // Filter by search query
-  if (searchQuery.value.trim()) {
-    const q = searchQuery.value.toLowerCase().trim()
-    list = list.filter(g => {
-      return (
-        (g.title && g.title.toLowerCase().includes(q)) ||
-        (g.platform && g.platform.toLowerCase().includes(q)) ||
-        (g.genre && g.genre.toLowerCase().includes(q))
-      )
-    })
-  }
-
-  // Filter by platform
-  if (selectedPlatform.value) {
-    list = list.filter(g => g.platform && g.platform.trim() === selectedPlatform.value)
-  }
-
-  // Sort
-  list.sort((a, b) => {
-    switch (sortBy.value) {
-      case 'date-desc':
-        return (b.dateCompleted || '').localeCompare(a.dateCompleted || '')
-      case 'date-asc':
-        return (a.dateCompleted || '').localeCompare(b.dateCompleted || '')
-      case 'score-desc':
-        return (Number(b.score) || 0) - (Number(a.score) || 0)
-      case 'score-asc':
-        return (Number(a.score) || 0) - (Number(b.score) || 0)
-      case 'hours-desc':
-        return (Number(b.hoursToFinish) || 0) - (Number(a.hoursToFinish) || 0)
-      case 'hours-asc':
-        return (Number(a.hoursToFinish) || 0) - (Number(b.hoursToFinish) || 0)
-      case 'title-asc':
-        return (a.title || '').localeCompare(b.title || '')
-      default:
-        return 0
-    }
-  })
-
-  return list
-})
 
 onMounted(() => {
   fetchGames()
