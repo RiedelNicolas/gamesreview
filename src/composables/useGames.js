@@ -4,13 +4,15 @@ const STORAGE_KEY = 'local_custom_games'
 
 // Legacy platform names mapped to the names used in games.json.
 // Applied when games are loaded; stored data is left as is.
-export const PLATFORM_ALIASES = {
+const PLATFORM_ALIASES = {
   'Switch 2': 'Nintendo Switch 2'
 }
 
 function normalizePlatform(game) {
-  const platform = game.platform && game.platform.trim()
-  return PLATFORM_ALIASES[platform] ? { ...game, platform: PLATFORM_ALIASES[platform] } : game
+  const platform = typeof game.platform === 'string' ? game.platform.trim() : ''
+  return Object.hasOwn(PLATFORM_ALIASES, platform)
+    ? { ...game, platform: PLATFORM_ALIASES[platform] }
+    : game
 }
 
 function readLocalGames() {
@@ -57,7 +59,7 @@ export function useGames() {
   }
 
   function addGame(newGame) {
-    allGames.value.unshift(newGame)
+    allGames.value.unshift(normalizePlatform(newGame))
     const extraGames = readLocalGames()
     extraGames.unshift(newGame)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(extraGames))
