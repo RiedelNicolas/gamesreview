@@ -74,8 +74,8 @@
               <div class="form-group flex-1">
                 <label for="score" class="form-label">
                   Score (1–100) <span class="req">*</span>
-                  <span class="score-preview" :style="{ color: scoreColor }">
-                    {{ form.score || 0 }}
+                  <span v-if="form.score" class="score-preview" :style="{ color: scoreColor }">
+                    {{ form.score }}
                   </span>
                 </label>
                 <input 
@@ -216,7 +216,7 @@ function handleSubmit() {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(26, 24, 20, 0.45);
+  background: color-mix(in srgb, var(--ink) 45%, transparent);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -365,8 +365,7 @@ function handleSubmit() {
   align-items: center;
   justify-content: flex-end;
   gap: var(--space-5);
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--rule);
+  padding-top: var(--space-3);
 }
 
 .btn-cancel {
