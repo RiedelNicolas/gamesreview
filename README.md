@@ -2,6 +2,8 @@
 
 A single-page log of the video games I've finished: hours played, platform, completion date and a score from 1 to 100. Built with Vue 3 and Vite, no backend.
 
+Deployed to https://gamelist.nriedel.com.ar on every push to `main`.
+
 ## Running it
 
 ```bash
