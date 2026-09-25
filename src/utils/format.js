@@ -1,11 +1,18 @@
 const LOCALE = 'en-US'
 
-// Parse 'YYYY-MM-DD' (or 'YYYY-MM') as a local date, not UTC.
-export function formatDate(dateStr, options = { year: 'numeric', month: 'short', day: 'numeric' }) {
-  if (!dateStr) return ''
+// Parse 'YYYY-MM-DD' as a local date (not UTC). Returns null for anything
+// else, including out-of-range values like '2026-13-45' that Date would roll over.
+export function parseLocalDate(dateStr) {
+  if (typeof dateStr !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return null
   const [y, m, d] = dateStr.split('-').map(Number)
-  if (!y || !m) return dateStr
-  return new Date(y, m - 1, d || 1).toLocaleDateString(LOCALE, options)
+  const date = new Date(y, m - 1, d)
+  return date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d ? date : null
+}
+
+export function formatDate(dateStr, options = { year: 'numeric', month: 'short', day: 'numeric' }) {
+  const date = parseLocalDate(dateStr)
+  if (!date) return typeof dateStr === 'string' ? dateStr : ''
+  return date.toLocaleDateString(LOCALE, options)
 }
 
 export function formatNumber(n) {

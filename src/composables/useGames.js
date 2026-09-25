@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { isRated } from '../utils/score.js'
+import { parseLocalDate } from '../utils/format.js'
 
 const STORAGE_KEY = 'local_custom_games'
 
@@ -74,12 +75,19 @@ export function useGames() {
     return Array.from(set).sort()
   })
 
-  // Most recently played game, by completion date
-  const latestGame = computed(() =>
-    allGames.value.reduce((latest, g) =>
-      !latest || (g.dateCompleted || '') > (latest.dateCompleted || '') ? g : latest
-    , null)
-  )
+  // Most recently played game, by completion date; invalid dates are ignored
+  const latestGame = computed(() => {
+    let latest = null
+    let latestTime = -Infinity
+    for (const g of allGames.value) {
+      const date = parseLocalDate(g.dateCompleted)
+      if (date && date.getTime() > latestTime) {
+        latest = g
+        latestTime = date.getTime()
+      }
+    }
+    return latest
+  })
 
   const processedGames = computed(() => {
     let list = [...allGames.value]
