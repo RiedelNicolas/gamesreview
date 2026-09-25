@@ -1,4 +1,5 @@
 import { ref, computed } from 'vue'
+import { isRated } from '../utils/score.js'
 
 const STORAGE_KEY = 'local_custom_games'
 
@@ -97,6 +98,11 @@ export function useGames() {
     }
 
     list.sort((a, b) => {
+      // Unrated games go last when sorting by score, in either direction
+      if (sortBy.value === 'score-desc' || sortBy.value === 'score-asc') {
+        const byRated = Number(isRated(b.score)) - Number(isRated(a.score))
+        if (byRated) return byRated
+      }
       switch (sortBy.value) {
         case 'date-desc':
           return (b.dateCompleted || '').localeCompare(a.dateCompleted || '')
