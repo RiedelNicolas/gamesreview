@@ -29,6 +29,7 @@ Games live in [`public/games.json`](public/games.json):
   "platform": "Nintendo Switch",
   "genre": "Roguelike / Action",
   "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cob9kr.webp",
+  "artwork": "https://images.igdb.com/igdb/image/upload/t_1080p/ar3m4s.webp",
   "hoursToFinish": 11,
   "score": 0,
   "status": "completed",
@@ -38,6 +39,7 @@ Games live in [`public/games.json`](public/games.json):
 
 - `score` of `0` means the game hasn't been rated yet; it shows as "Unrated".
 - `coverUrl` is a portrait cover (3:4). IGDB covers work well: `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/<image_id>.webp`.
+- `artwork` is optional: a landscape image (key art or screenshot) shown when the game is the featured one at the top. Without it the cover is used. IGDB: `https://images.igdb.com/igdb/image/upload/t_1080p/<image_id>.webp`.
 - Keep platform names consistent (for example always "Nintendo Switch 2"), since each distinct name becomes a filter tab.
 
 Score labels, from `src/utils/score.js`: 90–100 Masterpiece, 75–89 Great, 50–74 Decent, 25–49 Mediocre, below 25 Flawed.

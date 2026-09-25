@@ -21,7 +21,7 @@ function slugify(text) {
 function main() {
   const args = process.argv.slice(2)
   if (args.length === 0) {
-    console.error('Usage: node add-game.js \'{"title": "...", "score": 90, "hoursToFinish": 30}\'')
+    console.error('Usage: node add-game.js \'{"title": "...", "score": 90, "hoursToFinish": 30, "artwork": "https://... (optional)"}\'')
     process.exit(1)
   }
 
@@ -63,6 +63,7 @@ function main() {
     platform: gameData.platform || 'PC',
     genre: gameData.genre || 'General',
     coverUrl: gameData.coverUrl || 'https://images.igdb.com/igdb/image/upload/t_cover_big/nocover.webp',
+    ...(gameData.artwork ? { artwork: gameData.artwork } : {}),
     hoursToFinish: Number(gameData.hoursToFinish) || 0,
     score: Number(gameData.score),
     status: gameData.status || 'completed',
