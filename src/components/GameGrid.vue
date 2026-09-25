@@ -1,7 +1,7 @@
 <template>
   <div v-if="games.length === 0" class="empty-state">
-    <h3>No se encontraron juegos</h3>
-    <p>Prueba ajustando tu búsqueda o el filtro de plataforma.</p>
+    <h3>No games found</h3>
+    <p>Try a different search or platform.</p>
   </div>
 
   <div v-else class="games-grid">

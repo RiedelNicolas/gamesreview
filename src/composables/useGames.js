@@ -28,7 +28,7 @@ export function useGames() {
     try {
       const res = await fetch('./games.json')
       if (!res.ok) {
-        throw new Error(`Error al cargar games.json (HTTP ${res.status})`)
+        throw new Error(`Failed to load games.json (HTTP ${res.status})`)
       }
       const baseData = await res.json()
 
@@ -39,7 +39,7 @@ export function useGames() {
       allGames.value = [...uniqueExtras, ...baseData]
     } catch (err) {
       console.error('Error fetching games:', err)
-      error.value = 'No se pudieron cargar los juegos. Por favor verifica public/games.json.'
+      error.value = 'Could not load games. Check public/games.json.'
     } finally {
       loading.value = false
     }

@@ -1,76 +1,56 @@
-# 🎮 Video Games Review Log
+# Game Tracker
 
-A personal, lightweight frontend page to track and review video games you've played, their completion times, critic scores (1–100), and short personal analysis.
+A single-page log of the video games I've finished: hours played, platform, completion date and a score from 1 to 100. Built with Vue 3 and Vite, no backend.
 
-Rendered entirely in the frontend from a simple `public/games.json` file.
+## Running it
 
----
-
-## 🚀 Quick Start
-
-### 1. Install dependencies
 ```bash
 npm install
+npm run dev      # local dev server, usually http://localhost:5173
+npm run build    # static build in dist/
+npm run preview  # serve the build locally
 ```
 
-### 2. Start the development server
-```bash
-npm run dev
-```
+## What it does
 
-Then open the local URL (usually `http://localhost:5173`) in your browser.
+- Shows the most recently finished game as a feature at the top, then every game as a cover grid.
+- Header line with the total number of games, total hours and the average score (unrated games are left out of the average).
+- Filter by platform, search by title, platform or genre, and sort by date, score, hours or title.
+- "Add game" opens a form that saves the game in the browser's `localStorage` (key `local_custom_games`). Those games are merged with `public/games.json` by `id` on every load. They are not written back to the JSON file.
 
-### 3. Build for production / GitHub Pages
-```bash
-npm run build
-```
-The compiled static assets will be in `dist/`.
+## Data
 
----
-
-## 📝 How to Add / Edit Games
-
-Open [`public/games.json`](public/games.json) and add or modify entries:
+Games live in [`public/games.json`](public/games.json):
 
 ```json
 {
-  "id": "game-slug",
-  "title": "Game Title",
-  "platform": "PC / PS5 / Switch / Xbox",
-  "genre": "Action RPG",
-  "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big/co4jni.webp",
-  "hoursToFinish": 85,
-  "score": 95,
+  "id": "hades",
+  "title": "Hades",
+  "platform": "Nintendo Switch",
+  "genre": "Roguelike / Action",
+  "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cob9kr.webp",
+  "hoursToFinish": 11,
+  "score": 0,
   "status": "completed",
-  "dateCompleted": "2024-08-15",
-  "review": "Your detailed personal review or analysis goes here..."
+  "dateCompleted": "2026-03-12"
 }
 ```
 
-### Finding Game Cover Images
-You can use any direct image URL. Good sources include:
-- **[IGDB](https://www.igdb.com)**: Search for a game, open image in new tab. URL pattern: `https://images.igdb.com/igdb/image/upload/t_cover_big/<ID>.webp`
-- **[SteamGridDB](https://www.steamgriddb.com)**: High-resolution community game artwork and posters.
-- **[Steam Store](https://store.steampowered.com)**: Right-click on header images / capsules.
-- **IMDb** or Wikipedia image URLs.
+- `score` of `0` means the game hasn't been rated yet; it shows as "Unrated".
+- `coverUrl` is a portrait cover (3:4). IGDB covers work well: `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/<image_id>.webp`.
+- Keep platform names consistent (for example always "Nintendo Switch 2"), since each distinct name becomes a filter tab.
 
----
+Score labels, from `src/utils/score.js`: 90–100 Masterpiece, 75–89 Great, 50–74 Decent, 25–49 Mediocre, below 25 Flawed.
 
-## 🌟 Features
+To append a game from the command line there is a helper used by the `add-game` agent skill:
 
-- **Critic-Style 1–100 Scoring**:
-  - `90–100`: 🟢 Masterpiece (Emerald)
-  - `75–89`: 🔵 Great (Cyan)
-  - `50–74`: 🟡 Decent (Yellow)
-  - `25–49`: 🟠 Mediocre (Orange)
-  - `0–24`: 🔴 Flawed (Red)
-- **Automatic Summary Statistics**:
-  - Total games reviewed
-  - Total hours invested
-  - Average critic score
-  - Number of masterpieces (90+)
-- **Interactive Review Modal**: Click on any card or "Read Analysis" to view full writeups and metadata.
-- **Search & Sort**:
-  - Live filtering by title, genre, or platform
-  - Sort by date completed, score, or completion time
-- **Zero Backend**: All data lives in `public/games.json`.
+```bash
+node .agents/skills/add-game/scripts/add-game.js '{"title": "Hades", "platform": "Nintendo Switch", "score": 90, "hoursToFinish": 11}'
+```
+
+## Code layout
+
+- `src/composables/useGames.js`: loading, merging with `localStorage`, filtering and sorting.
+- `src/utils/score.js`: score thresholds, labels and colors.
+- `src/components/`: masthead, hero, toolbar, grid, card and the add-game modal.
+- `src/style.css`: design tokens (colors, type, spacing).

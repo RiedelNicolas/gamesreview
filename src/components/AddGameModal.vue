@@ -4,8 +4,8 @@
       <div v-if="show" class="modal-overlay" @click.self="$emit('close')">
         <div class="modal-card" role="dialog" aria-modal="true">
           <div class="modal-header">
-            <h2 class="modal-title">Cargar Nuevo Juego</h2>
-            <button class="modal-close" @click="$emit('close')" aria-label="Cerrar modal">
+            <h2 class="modal-title">Add a game</h2>
+            <button class="modal-close" @click="$emit('close')" aria-label="Close">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -16,20 +16,20 @@
           <form @submit.prevent="handleSubmit" class="add-game-form">
             <!-- Title -->
             <div class="form-group">
-              <label for="title" class="form-label">Título del Juego <span class="req">*</span></label>
+              <label for="title" class="form-label">Title <span class="req">*</span></label>
               <input 
                 id="title"
                 v-model="form.title" 
                 type="text" 
                 required 
-                placeholder="Ej. Metroid Prime 4, Elden Ring, Hades 2..." 
+                placeholder="e.g. Metroid Prime 4, Elden Ring, Hades II" 
                 class="form-input"
               />
             </div>
 
             <!-- Platform Field (Switch 2, PC, etc.) -->
             <div class="form-group">
-              <label class="form-label">Plataforma <span class="req">*</span></label>
+              <label class="form-label">Platform <span class="req">*</span></label>
               <div class="presets">
                 <button 
                   type="button" 
@@ -47,7 +47,7 @@
                 v-model="form.platform" 
                 type="text" 
                 required 
-                placeholder="O escribe una plataforma personalizada (ej. Switch 2, PC, PS5...)" 
+                placeholder="Or type a custom platform (e.g. Switch 2, PC, PS5)" 
                 class="form-input mt-2"
               />
             </div>
@@ -55,7 +55,7 @@
             <!-- Hours & Score row -->
             <div class="form-row">
               <div class="form-group flex-1">
-                <label for="hours" class="form-label">Horas jugadas <span class="req">*</span></label>
+                <label for="hours" class="form-label">Hours played <span class="req">*</span></label>
                 <div class="input-with-suffix">
                   <input 
                     id="hours"
@@ -64,16 +64,16 @@
                     min="0" 
                     step="0.5"
                     required 
-                    placeholder="Ej. 35" 
+                    placeholder="e.g. 35" 
                     class="form-input"
                   />
-                  <span class="input-suffix">hrs</span>
+                  <span class="input-suffix">h</span>
                 </div>
               </div>
 
               <div class="form-group flex-1">
                 <label for="score" class="form-label">
-                  Puntaje (1-100) <span class="req">*</span>
+                  Score (1–100) <span class="req">*</span>
                   <span class="score-preview" :style="{ color: scoreColor }">
                     {{ form.score || 0 }}
                   </span>
@@ -85,7 +85,7 @@
                   min="0" 
                   max="100" 
                   required 
-                  placeholder="Ej. 92" 
+                  placeholder="e.g. 92" 
                   class="form-input"
                 />
               </div>
@@ -94,18 +94,18 @@
             <!-- Optional Cover URL & Genre -->
             <div class="form-row">
               <div class="form-group flex-1">
-                <label for="genre" class="form-label">Género</label>
+                <label for="genre" class="form-label">Genre</label>
                 <input 
                   id="genre"
                   v-model="form.genre" 
                   type="text" 
-                  placeholder="Ej. Action RPG, Plataformas..." 
+                  placeholder="e.g. Action RPG, Platformer" 
                   class="form-input"
                 />
               </div>
 
               <div class="form-group flex-1">
-                <label for="date" class="form-label">Fecha completado</label>
+                <label for="date" class="form-label">Date completed</label>
                 <input 
                   id="date"
                   v-model="form.dateCompleted" 
@@ -116,12 +116,12 @@
             </div>
 
             <div class="form-group">
-              <label for="cover" class="form-label">URL de portada (opcional)</label>
+              <label for="cover" class="form-label">Cover URL (optional)</label>
               <input 
                 id="cover"
                 v-model="form.coverUrl" 
                 type="url" 
-                placeholder="https://images.igdb.com/... o enlace directo a imagen" 
+                placeholder="https://images.igdb.com/... or any direct image link" 
                 class="form-input"
               />
             </div>
@@ -129,10 +129,10 @@
             <!-- Actions -->
             <div class="form-actions">
               <button type="button" class="btn-cancel" @click="$emit('close')">
-                Cancelar
+                Cancel
               </button>
               <button type="submit" class="btn-submit">
-                Guardar Juego
+                Save game
               </button>
             </div>
           </form>

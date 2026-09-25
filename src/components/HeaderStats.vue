@@ -2,11 +2,11 @@
   <header class="masthead">
     <div class="masthead-top">
       <span class="byline">Nicolás Riedel</span>
-      <button class="add-btn" @click="$emit('open-add')">+ Cargar Juego</button>
+      <button class="add-btn" @click="$emit('open-add')">+ Add game</button>
     </div>
     <h1 class="title">Game Tracker</h1>
     <p v-if="games.length" class="stats">
-      {{ games.length }} juegos · {{ formatNumber(totalHours) }} h · promedio {{ avgScore }}
+      {{ games.length }} games · {{ formatNumber(totalHours) }} h · avg {{ avgScore }}
     </p>
   </header>
 </template>

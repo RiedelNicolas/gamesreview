@@ -1,4 +1,4 @@
-const LOCALE = 'es-ES'
+const LOCALE = 'en-US'
 
 // Parse 'YYYY-MM-DD' (or 'YYYY-MM') as a local date, not UTC.
 export function formatDate(dateStr, options = { year: 'numeric', month: 'short', day: 'numeric' }) {

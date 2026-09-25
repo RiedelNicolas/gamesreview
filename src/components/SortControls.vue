@@ -1,12 +1,12 @@
 <template>
   <div class="toolbar">
-    <nav class="tabs" aria-label="Plataforma">
+    <nav class="tabs" aria-label="Platform">
       <button
         class="tab"
         :class="{ active: !selectedPlatform }"
         @click="$emit('update:selectedPlatform', '')"
       >
-        Todas
+        All
       </button>
       <button
         v-for="plat in platforms"
@@ -24,23 +24,23 @@
         type="search"
         :value="searchQuery"
         @input="$emit('update:searchQuery', $event.target.value)"
-        placeholder="Buscar por título, plataforma o género..."
-        aria-label="Buscar"
+        placeholder="Search title, platform or genre"
+        aria-label="Search"
         class="search"
       />
       <select
         :value="sortBy"
         @change="$emit('update:sortBy', $event.target.value)"
-        aria-label="Ordenar por"
+        aria-label="Sort by"
         class="sort"
       >
-        <option value="date-desc">Fecha (más reciente)</option>
-        <option value="date-asc">Fecha (más antigua)</option>
-        <option value="score-desc">Puntaje (mayor a menor)</option>
-        <option value="score-asc">Puntaje (menor a mayor)</option>
-        <option value="hours-desc">Horas (más jugadas)</option>
-        <option value="hours-asc">Horas (menos jugadas)</option>
-        <option value="title-asc">Título (A → Z)</option>
+        <option value="date-desc">Newest first</option>
+        <option value="date-asc">Oldest first</option>
+        <option value="score-desc">Highest score</option>
+        <option value="score-asc">Lowest score</option>
+        <option value="hours-desc">Most hours</option>
+        <option value="hours-asc">Fewest hours</option>
+        <option value="title-asc">Title (A–Z)</option>
       </select>
     </div>
   </div>

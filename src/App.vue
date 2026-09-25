@@ -2,11 +2,11 @@
   <div class="page">
     <HeaderStats :games="allGames" @open-add="showAddModal = true" />
 
-    <p v-if="loading" class="state">Cargando juegos...</p>
+    <p v-if="loading" class="state">Loading games…</p>
 
     <div v-else-if="error" class="state">
       <p>{{ error }}</p>
-      <button class="retry-btn" @click="fetchGames">Reintentar</button>
+      <button class="retry-btn" @click="fetchGames">Try again</button>
     </div>
 
     <template v-else>
@@ -67,7 +67,7 @@ const toastMessage = ref('')
 function handleAddGame(newGame) {
   addGame(newGame)
 
-  toastMessage.value = `¡"${newGame.title}" (${newGame.platform}) agregado con éxito!`
+  toastMessage.value = `Added "${newGame.title}" (${newGame.platform})`
   setTimeout(() => {
     toastMessage.value = ''
   }, 4000)
