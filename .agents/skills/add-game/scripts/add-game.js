@@ -5,7 +5,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const rootDir = path.resolve(__dirname, '../../..')
+const rootDir = path.resolve(__dirname, '../../../..')
 const gamesJsonPath = path.join(rootDir, 'public/games.json')
 
 function slugify(text) {
