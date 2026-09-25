@@ -1,11 +1,11 @@
-// Single source for score thresholds, labels and colors.
+// Single source for score thresholds and colors.
 // Colors point at CSS tokens defined in src/style.css.
 export const SCORE_TIERS = [
-  { min: 90, label: 'Masterpiece', color: 'var(--score-masterpiece)' },
-  { min: 75, label: 'Great', color: 'var(--score-great)' },
-  { min: 50, label: 'Decent', color: 'var(--score-average)' },
-  { min: 25, label: 'Mediocre', color: 'var(--score-mediocre)' },
-  { min: 0, label: 'Flawed', color: 'var(--score-bad)' }
+  { min: 90, color: 'var(--score-masterpiece)' },
+  { min: 75, color: 'var(--score-great)' },
+  { min: 50, color: 'var(--score-average)' },
+  { min: 25, color: 'var(--score-mediocre)' },
+  { min: 0, color: 'var(--score-bad)' }
 ]
 
 export function scoreTier(score) {
@@ -14,7 +14,6 @@ export function scoreTier(score) {
 }
 
 export const scoreColor = (score) => scoreTier(score).color
-export const scoreLabel = (score) => scoreTier(score).label
 
 export const UNRATED_LABEL = 'Unrated'
 

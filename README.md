@@ -42,8 +42,6 @@ Games live in [`public/games.json`](public/games.json):
 - `artwork` is optional: a landscape image (key art or screenshot) shown when the game is the featured one at the top. Without it the cover is used. IGDB: `https://images.igdb.com/igdb/image/upload/t_1080p/<image_id>.webp`.
 - Keep platform names consistent (for example always "Nintendo Switch 2"), since each distinct name becomes a filter tab.
 
-Score labels, from `src/utils/score.js`: 90–100 Masterpiece, 75–89 Great, 50–74 Decent, 25–49 Mediocre, below 25 Flawed.
-
 To append a game from the command line there is a helper used by the `add-game` agent skill:
 
 ```bash
@@ -53,6 +51,6 @@ node .agents/skills/add-game/scripts/add-game.js '{"title": "Hades", "platform":
 ## Code layout
 
 - `src/composables/useGames.js`: loading, merging with `localStorage`, filtering and sorting.
-- `src/utils/score.js`: score thresholds, labels and colors.
+- `src/utils/score.js`: score thresholds and colors, and the "Unrated" label.
 - `src/components/`: masthead, hero, toolbar, grid, card and the add-game modal.
 - `src/style.css`: design tokens (colors, type, spacing).

@@ -48,7 +48,7 @@
                 type="text" 
                 required 
                 placeholder="Or type another platform" 
-                class="form-input mt-2"
+                class="form-input platform-input"
               />
             </div>
 
@@ -91,7 +91,7 @@
               </div>
             </div>
 
-            <!-- Optional Cover URL & Genre -->
+            <!-- Genre & Date -->
             <div class="form-row">
               <div class="form-group flex-1">
                 <label for="genre" class="form-label">Genre</label>
@@ -200,7 +200,7 @@ function handleSubmit() {
     title: form.value.title.trim(),
     platform: form.value.platform.trim() || 'PC',
     genre: form.value.genre.trim() || 'General',
-    coverUrl: form.value.coverUrl.trim() || 'https://images.igdb.com/igdb/image/upload/t_cover_big/nocover.webp',
+    coverUrl: form.value.coverUrl.trim() || 'https://images.igdb.com/igdb/image/upload/t_cover_big_2x/nocover.webp',
     hoursToFinish: Number(form.value.hoursToFinish) || 0,
     score: Number(form.value.score) || 0,
     status: 'completed',
@@ -279,7 +279,7 @@ function handleSubmit() {
   min-width: 0;
 }
 
-.mt-2 {
+.platform-input {
   margin-top: var(--space-1);
 }
 

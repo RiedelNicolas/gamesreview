@@ -69,7 +69,7 @@ function main() {
     title: gameData.title.trim(),
     platform: gameData.platform || 'PC',
     genre: gameData.genre || 'General',
-    coverUrl: gameData.coverUrl || 'https://images.igdb.com/igdb/image/upload/t_cover_big/nocover.webp',
+    coverUrl: gameData.coverUrl || 'https://images.igdb.com/igdb/image/upload/t_cover_big_2x/nocover.webp',
     ...(gameData.artwork ? { artwork: gameData.artwork } : {}),
     hoursToFinish: Number(gameData.hoursToFinish) || 0,
     score: Number(gameData.score),
