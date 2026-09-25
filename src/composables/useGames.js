@@ -60,6 +60,13 @@ export function useGames() {
     return Array.from(set).sort()
   })
 
+  // Most recently played game, by completion date
+  const latestGame = computed(() =>
+    allGames.value.reduce((latest, g) =>
+      !latest || (g.dateCompleted || '') > (latest.dateCompleted || '') ? g : latest
+    , null)
+  )
+
   const processedGames = computed(() => {
     let list = [...allGames.value]
 
@@ -108,6 +115,7 @@ export function useGames() {
     sortBy,
     selectedPlatform,
     availablePlatforms,
+    latestGame,
     processedGames,
     fetchGames,
     addGame

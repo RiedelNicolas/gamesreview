@@ -15,3 +15,8 @@ export function scoreTier(score) {
 
 export const scoreColor = (score) => scoreTier(score).color
 export const scoreLabel = (score) => scoreTier(score).label
+
+export const UNRATED_LABEL = 'Sin calificar'
+
+// A score of 0 (or missing) means the game has not been rated yet.
+export const isRated = (score) => Number(score) > 0

@@ -1,18 +1,15 @@
 <template>
-  <div class="grid-container">
-    <div v-if="games.length === 0" class="empty-state">
-      <span class="empty-icon">🎮</span>
-      <h3>No se encontraron juegos</h3>
-      <p>Prueba ajustando tu búsqueda o agrega nuevos juegos en <code>public/games.json</code>.</p>
-    </div>
+  <div v-if="games.length === 0" class="empty-state">
+    <h3>No se encontraron juegos</h3>
+    <p>Prueba ajustando tu búsqueda o el filtro de plataforma.</p>
+  </div>
 
-    <div v-else class="games-grid">
-      <GameCard 
-        v-for="game in games" 
-        :key="game.id" 
-        :game="game"
-      />
-    </div>
+  <div v-else class="games-grid">
+    <GameCard
+      v-for="game in games"
+      :key="game.id"
+      :game="game"
+    />
   </div>
 </template>
 
@@ -28,50 +25,33 @@ defineProps({
 </script>
 
 <style scoped>
-.grid-container {
-  width: 100%;
-}
-
 .games-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-7) var(--space-6);
+}
+
+@media (max-width: 640px) {
+  .games-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-4);
+  }
 }
 
 .empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-  background: var(--bg-card);
-  border: 1px dashed var(--border-color);
-  border-radius: var(--radius-lg);
+  padding: var(--space-9) 0;
   text-align: center;
 }
 
-.empty-icon {
-  font-size: 3rem;
-  margin-bottom: 12px;
-}
-
 .empty-state h3 {
-  font-size: 1.25rem;
-  color: #fff;
-  margin-bottom: 6px;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 500;
 }
 
 .empty-state p {
-  color: var(--text-secondary);
-  font-size: 0.92rem;
-  max-width: 440px;
-}
-
-.empty-state code {
-  font-family: var(--font-mono);
-  background: rgba(255, 255, 255, 0.08);
-  padding: 2px 6px;
-  border-radius: 4px;
-  color: var(--accent-cyan);
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
 }
 </style>

@@ -4,10 +4,7 @@
       <div v-if="show" class="modal-overlay" @click.self="$emit('close')">
         <div class="modal-card" role="dialog" aria-modal="true">
           <div class="modal-header">
-            <div class="modal-title-wrap">
-              <span class="modal-badge-icon">➕</span>
-              <h2 class="modal-title">Cargar Nuevo Juego</h2>
-            </div>
+            <h2 class="modal-title">Cargar Nuevo Juego</h2>
             <button class="modal-close" @click="$emit('close')" aria-label="Cerrar modal">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -33,12 +30,12 @@
             <!-- Platform Field (Switch 2, PC, etc.) -->
             <div class="form-group">
               <label class="form-label">Plataforma <span class="req">*</span></label>
-              <div class="platform-chips-row">
+              <div class="presets">
                 <button 
                   type="button" 
                   v-for="p in presetPlatforms" 
                   :key="p"
-                  class="preset-chip"
+                  class="preset"
                   :class="{ active: form.platform === p }"
                   @click="form.platform = p"
                 >
@@ -77,7 +74,7 @@
               <div class="form-group flex-1">
                 <label for="score" class="form-label">
                   Puntaje (1-100) <span class="req">*</span>
-                  <span class="score-preview-badge" :style="{ backgroundColor: scoreColor }">
+                  <span class="score-preview" :style="{ color: scoreColor }">
                     {{ form.score || 0 }}
                   </span>
                 </label>
@@ -218,162 +215,129 @@ function handleSubmit() {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(4, 6, 10, 0.82);
-  backdrop-filter: blur(8px);
+  background: rgba(26, 24, 20, 0.45);
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: var(--space-4);
 }
 
 .modal-card {
-  position: relative;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
+  background: var(--paper);
+  border-top: 3px solid var(--ink);
   max-width: 540px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85);
-  animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  padding: 28px;
+  padding: var(--space-6);
 }
 
 .modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 22px;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 16px;
-}
-
-.modal-title-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.modal-badge-icon {
-  font-size: 1.4rem;
+  margin-bottom: var(--space-5);
 }
 
 .modal-title {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #fff;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 
 .modal-close {
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-secondary);
+  color: var(--ink-soft);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
 }
 
 .modal-close:hover {
-  background: rgba(255, 255, 255, 0.18);
-  color: #fff;
+  color: var(--ink);
 }
 
 .add-game-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-5);
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .form-row {
   display: flex;
-  gap: 14px;
+  gap: var(--space-5);
 }
 
 .flex-1 {
   flex: 1;
+  min-width: 0;
 }
 
 .mt-2 {
-  margin-top: 8px;
+  margin-top: var(--space-1);
 }
 
 .form-label {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .req {
-  color: #f87171;
+  color: var(--accent);
 }
 
-.score-preview-badge {
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  font-weight: 700;
-  color: #0b0d13;
-  padding: 2px 7px;
-  border-radius: 4px;
+.score-preview {
+  font-family: var(--font-display);
+  font-weight: 600;
 }
 
-.platform-chips-row {
+.presets {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--space-4);
 }
 
-.preset-chip {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  color: var(--text-secondary);
-  padding: 5px 10px;
-  border-radius: var(--radius-sm);
-  font-size: 0.78rem;
-  font-weight: 600;
-  transition: all 0.15s ease;
+.preset {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
 }
 
-.preset-chip:hover {
-  border-color: rgba(255, 255, 255, 0.3);
-  color: #fff;
+.preset:hover {
+  color: var(--ink);
 }
 
-.preset-chip.active {
-  background: rgba(56, 189, 248, 0.15);
-  border-color: var(--accent-cyan);
-  color: var(--accent-cyan);
+.preset.active {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
 }
 
 .form-input {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
-  color: var(--text-primary);
-  font-family: inherit;
-  font-size: 0.88rem;
-  outline: none;
-  transition: all 0.2s ease;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  border-radius: 0;
+  padding: var(--space-2) 0;
+  font-size: var(--text-base);
+}
+
+.form-input::placeholder {
+  color: var(--ink-muted);
 }
 
 .form-input:focus {
-  border-color: var(--accent-cyan);
-  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+  outline: none;
+  border-bottom-color: var(--ink);
 }
 
 .input-with-suffix {
@@ -383,16 +347,14 @@ function handleSubmit() {
 }
 
 .input-with-suffix .form-input {
-  width: 100%;
-  padding-right: 44px;
+  padding-right: 36px;
 }
 
 .input-suffix {
   position: absolute;
-  right: 12px;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
+  right: 0;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
   pointer-events: none;
 }
 
@@ -400,44 +362,42 @@ function handleSubmit() {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 12px;
-  margin-top: 10px;
-  padding-top: 14px;
-  border-top: 1px solid var(--border-color);
+  gap: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--rule);
 }
 
 .btn-cancel {
-  padding: 9px 18px;
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--text-secondary);
-  font-weight: 600;
-  font-size: 0.88rem;
-  transition: all 0.15s ease;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
 }
 
 .btn-cancel:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.06);
+  color: var(--ink);
 }
 
 .btn-submit {
-  padding: 9px 20px;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--accent-cyan), #38bdf8);
-  color: #0b0d13;
-  font-weight: 700;
-  font-size: 0.88rem;
-  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
-  transition: all 0.2s ease;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--space-2) var(--space-5);
 }
 
 .btn-submit:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.45);
+  background: var(--accent);
 }
 
-/* Modal Transition */
+@media (max-width: 640px) {
+  .modal-card {
+    padding: var(--space-5);
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+}
+
 .modal-enter-active,
 .modal-leave-active {
   transition: opacity 0.2s ease;

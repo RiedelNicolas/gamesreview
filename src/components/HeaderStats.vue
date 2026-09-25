@@ -1,38 +1,19 @@
 <template>
-  <header class="header-container">
-    <div class="header-branding">
-      <div class="header-icon-wrap">
-        <span class="header-icon">🎮</span>
-      </div>
-      <div>
-        <h1 class="header-title">
-          Personal <span class="gradient-text">Game Tracker</span>
-        </h1>
-        <p class="header-subtitle">
-          Nicolás Riedel
-        </p>
-      </div>
+  <header class="masthead">
+    <div class="masthead-top">
+      <span class="byline">Nicolás Riedel</span>
+      <button class="add-btn" @click="$emit('open-add')">+ Cargar Juego</button>
     </div>
-
-    <div v-if="games && games.length" class="stats-summary">
-      <div class="stat-box">
-        <span class="stat-number">{{ games.length }}</span>
-        <span class="stat-label">Juegos</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-number">{{ totalHours }}h</span>
-        <span class="stat-label">Horas Totales</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-number score-accent">{{ avgScore }}</span>
-        <span class="stat-label">Puntaje Promedio</span>
-      </div>
-    </div>
+    <h1 class="title">Game Tracker</h1>
+    <p v-if="games.length" class="stats">
+      {{ games.length }} juegos · {{ formatNumber(totalHours) }} h · promedio {{ avgScore }}
+    </p>
   </header>
 </template>
 
 <script setup>
 import { computed } from 'vue'
+import { formatNumber } from '../utils/format.js'
 
 const props = defineProps({
   games: {
@@ -41,132 +22,61 @@ const props = defineProps({
   }
 })
 
-const totalHours = computed(() => {
-  const sum = props.games.reduce((acc, g) => acc + (Number(g.hoursToFinish) || 0), 0)
-  return Math.round(sum * 10) / 10
-})
+defineEmits(['open-add'])
+
+const totalHours = computed(() =>
+  props.games.reduce((acc, g) => acc + (Number(g.hoursToFinish) || 0), 0)
+)
 
 const avgScore = computed(() => {
-  if (!props.games.length) return 0
   const rated = props.games.filter(g => Number(g.score) > 0)
   if (!rated.length) return 0
-  const total = rated.reduce((acc, g) => acc + (Number(g.score) || 0), 0)
+  const total = rated.reduce((acc, g) => acc + Number(g.score), 0)
   return Math.round(total / rated.length)
 })
 </script>
 
 <style scoped>
-.header-container {
-  padding: 40px 0 28px;
+.masthead {
+  padding: var(--space-6) 0 var(--space-5);
+  border-bottom: 3px double var(--ink);
+}
+
+.masthead-top {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
+  gap: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
 }
 
-.header-branding {
-  display: flex;
-  align-items: center;
-  gap: 18px;
+.add-btn {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 1px;
 }
 
-.header-icon-wrap {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(168, 85, 247, 0.18));
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-  flex-shrink: 0;
+.add-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
-.header-icon {
-  font-size: 2rem;
-}
-
-.header-title {
-  font-size: 2.2rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: #fff;
-  line-height: 1.15;
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.header-subtitle {
-  color: var(--text-secondary);
-  font-size: 1.05rem;
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
   font-weight: 600;
-  letter-spacing: 0.02em;
-  margin-top: 4px;
+  font-variation-settings: 'opsz' 144;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-top: var(--space-4);
 }
 
-.stats-summary {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.stat-box {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  padding: 10px 18px;
-  border-radius: var(--radius-md);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 105px;
-}
-
-.stat-number {
-  font-family: var(--font-mono);
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.2;
-}
-
-.score-accent {
-  color: var(--accent-cyan);
-}
-
-.stat-label {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
-  margin-top: 2px;
-}
-
-@media (max-width: 768px) {
-  .header-container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .stats-summary {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .stat-box {
-    flex: 1;
-    min-width: 0;
-    padding: 8px 10px;
-  }
-
-  .stat-number {
-    font-size: 1.2rem;
-  }
+.stats {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
 }
 </style>
