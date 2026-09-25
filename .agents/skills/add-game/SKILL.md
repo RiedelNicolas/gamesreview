@@ -2,7 +2,7 @@
 name: add-game
 description: >-
   Use this skill when the user wants to log, add, or register a new video game into public/games.json.
-  Covers gathering game metadata (title, platform, genre, score 1-100, hours, date, cover URL) without requiring reviews.
+  Covers gathering game metadata (title, platform, genre, score 1-100, hours, date, cover URL, optional artwork URL) without requiring reviews.
 ---
 
 # Add Game Skill
@@ -17,9 +17,10 @@ Every entry in `public/games.json` has the following structure:
 {
   "id": "game-title-slug",
   "title": "Full Game Title",
-  "platform": "Switch 2 / PC / Nintendo Switch / PS5 / Xbox Series X / etc.",
+  "platform": "Nintendo Switch 2 / Nintendo Switch / PC / PS5 / Xbox Series X / etc.",
   "genre": "Action RPG / Roguelike / Platformer / etc.",
   "coverUrl": "https://...",
+  "artwork": "https://... (optional)",
   "hoursToFinish": 45,
   "score": 92,
   "status": "completed",
@@ -35,10 +36,17 @@ Every entry in `public/games.json` has the following structure:
 - **0–24**: 🔴 Flawed
 
 ### Sourcing Cover Art URLs
-1. **IGDB**: High quality covers at `https://images.igdb.com/igdb/image/upload/t_cover_big/<IMAGE_ID>.webp`
+1. **IGDB**: High quality covers at `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/<IMAGE_ID>.webp`
 2. **Steam Library Art**: `https://cdn.cloudflare.steamstatic.com/steam/apps/<APP_ID>/library_600x900_2x.jpg`
 3. **Steam Header**: `https://cdn.cloudflare.steamstatic.com/steam/apps/<APP_ID>/header.jpg`
 4. **SteamGridDB / IMDb / Direct URL**: Any stable web image link.
+
+Always open the image and check it shows the right game before saving it.
+
+### Sourcing Artwork URLs (optional)
+`artwork` is a landscape image (key art or a screenshot, roughly 16:9) used when the game is the featured "latest played" entry. If it is missing, the cover is used instead.
+1. **IGDB artwork**: `https://images.igdb.com/igdb/image/upload/t_1080p/<ARTWORK_ID>.webp` (artwork ids start with `ar`)
+2. **IGDB screenshot**: `https://images.igdb.com/igdb/image/upload/t_1080p/<SCREENSHOT_ID>.webp` (ids usually start with `sc`)
 
 ---
 
@@ -47,12 +55,13 @@ Every entry in `public/games.json` has the following structure:
 ### Step 1: Collect Missing Details
 If the user didn't supply all details, ask for the missing ones:
 - **Title**: Exact name of the game.
-- **Platform**: e.g., Switch 2, PC, Nintendo Switch, PS5, Xbox Series X, etc.
+- **Platform**: e.g., Nintendo Switch 2, Nintendo Switch, PC, PS5, Xbox Series X, etc. Reuse the exact name already in `games.json` (each distinct name becomes its own filter tab).
 - **Hours to Finish**: Approximate playtime.
 - **Score**: Number from 1 to 100.
 - **Genre**: e.g., Action RPG, Roguelike, Platformer, etc. (optional/suggest based on game).
 - **Completion Date**: Default to today's date (`YYYY-MM-DD`) if not specified.
 - **Cover Image**: Direct image URL (offer to find one if needed).
+- **Artwork** (optional): Landscape image URL for the featured spot.
 
 ### Step 2: Register Game Entry
 You can either:

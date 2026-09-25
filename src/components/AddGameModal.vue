@@ -4,11 +4,8 @@
       <div v-if="show" class="modal-overlay" @click.self="$emit('close')">
         <div class="modal-card" role="dialog" aria-modal="true">
           <div class="modal-header">
-            <div class="modal-title-wrap">
-              <span class="modal-badge-icon">➕</span>
-              <h2 class="modal-title">Cargar Nuevo Juego</h2>
-            </div>
-            <button class="modal-close" @click="$emit('close')" aria-label="Cerrar modal">
+            <h2 class="modal-title">Add a game</h2>
+            <button class="modal-close" @click="$emit('close')" aria-label="Close">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -19,26 +16,26 @@
           <form @submit.prevent="handleSubmit" class="add-game-form">
             <!-- Title -->
             <div class="form-group">
-              <label for="title" class="form-label">Título del Juego <span class="req">*</span></label>
+              <label for="title" class="form-label">Title <span class="req">*</span></label>
               <input 
                 id="title"
                 v-model="form.title" 
                 type="text" 
                 required 
-                placeholder="Ej. Metroid Prime 4, Elden Ring, Hades 2..." 
+                placeholder="e.g. Metroid Prime 4, Elden Ring, Hades II" 
                 class="form-input"
               />
             </div>
 
-            <!-- Platform Field (Switch 2, PC, etc.) -->
+            <!-- Platform -->
             <div class="form-group">
-              <label class="form-label">Plataforma <span class="req">*</span></label>
-              <div class="platform-chips-row">
+              <label class="form-label">Platform <span class="req">*</span></label>
+              <div class="presets">
                 <button 
                   type="button" 
                   v-for="p in presetPlatforms" 
                   :key="p"
-                  class="preset-chip"
+                  class="preset"
                   :class="{ active: form.platform === p }"
                   @click="form.platform = p"
                 >
@@ -50,15 +47,15 @@
                 v-model="form.platform" 
                 type="text" 
                 required 
-                placeholder="O escribe una plataforma personalizada (ej. Switch 2, PC, PS5...)" 
-                class="form-input mt-2"
+                placeholder="Or type another platform" 
+                class="form-input platform-input"
               />
             </div>
 
             <!-- Hours & Score row -->
             <div class="form-row">
               <div class="form-group flex-1">
-                <label for="hours" class="form-label">Horas jugadas <span class="req">*</span></label>
+                <label for="hours" class="form-label">Hours played <span class="req">*</span></label>
                 <div class="input-with-suffix">
                   <input 
                     id="hours"
@@ -67,18 +64,18 @@
                     min="0" 
                     step="0.5"
                     required 
-                    placeholder="Ej. 35" 
+                    placeholder="e.g. 35" 
                     class="form-input"
                   />
-                  <span class="input-suffix">hrs</span>
+                  <span class="input-suffix">h</span>
                 </div>
               </div>
 
               <div class="form-group flex-1">
                 <label for="score" class="form-label">
-                  Puntaje (1-100) <span class="req">*</span>
-                  <span class="score-preview-badge" :style="{ backgroundColor: scoreColor }">
-                    {{ form.score || 0 }}
+                  Score (1–100) <span class="req">*</span>
+                  <span v-if="form.score" class="score-preview" :style="{ color: scoreColor }">
+                    {{ form.score }}
                   </span>
                 </label>
                 <input 
@@ -88,27 +85,27 @@
                   min="0" 
                   max="100" 
                   required 
-                  placeholder="Ej. 92" 
+                  placeholder="e.g. 92" 
                   class="form-input"
                 />
               </div>
             </div>
 
-            <!-- Optional Cover URL & Genre -->
+            <!-- Genre & Date -->
             <div class="form-row">
               <div class="form-group flex-1">
-                <label for="genre" class="form-label">Género</label>
+                <label for="genre" class="form-label">Genre</label>
                 <input 
                   id="genre"
                   v-model="form.genre" 
                   type="text" 
-                  placeholder="Ej. Action RPG, Plataformas..." 
+                  placeholder="e.g. Action RPG, Platformer" 
                   class="form-input"
                 />
               </div>
 
               <div class="form-group flex-1">
-                <label for="date" class="form-label">Fecha completado</label>
+                <label for="date" class="form-label">Date completed</label>
                 <input 
                   id="date"
                   v-model="form.dateCompleted" 
@@ -119,12 +116,12 @@
             </div>
 
             <div class="form-group">
-              <label for="cover" class="form-label">URL de portada (opcional)</label>
+              <label for="cover" class="form-label">Cover URL (optional)</label>
               <input 
                 id="cover"
                 v-model="form.coverUrl" 
                 type="url" 
-                placeholder="https://images.igdb.com/... o enlace directo a imagen" 
+                placeholder="https://images.igdb.com/... or any direct image link" 
                 class="form-input"
               />
             </div>
@@ -132,10 +129,10 @@
             <!-- Actions -->
             <div class="form-actions">
               <button type="button" class="btn-cancel" @click="$emit('close')">
-                Cancelar
+                Cancel
               </button>
               <button type="submit" class="btn-submit">
-                Guardar Juego
+                Save game
               </button>
             </div>
           </form>
@@ -147,6 +144,8 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
+import { scoreColor as getScoreColor } from '../utils/score.js'
+import { todayLocal } from '../utils/format.js'
 
 const props = defineProps({
   show: {
@@ -157,15 +156,15 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'add'])
 
-const presetPlatforms = ['Switch 2', 'PC', 'Nintendo Switch', 'PS5', 'Xbox Series X']
+const presetPlatforms = ['Nintendo Switch 2', 'Nintendo Switch', 'PC', 'PS5', 'Xbox Series X']
 
 const form = ref({
   title: '',
-  platform: 'Switch 2',
+  platform: 'Nintendo Switch 2',
   hoursToFinish: null,
   score: null,
   genre: 'General',
-  dateCompleted: new Date().toISOString().split('T')[0],
+  dateCompleted: todayLocal(),
   coverUrl: ''
 })
 
@@ -173,24 +172,17 @@ watch(() => props.show, (isShown) => {
   if (isShown) {
     form.value = {
       title: '',
-      platform: 'Switch 2',
+      platform: 'Nintendo Switch 2',
       hoursToFinish: null,
       score: null,
       genre: '',
-      dateCompleted: new Date().toISOString().split('T')[0],
+      dateCompleted: todayLocal(),
       coverUrl: ''
     }
   }
 })
 
-const scoreColor = computed(() => {
-  const s = Number(form.value.score) || 0
-  if (s >= 90) return '#10b981'
-  if (s >= 75) return '#06b6d4'
-  if (s >= 50) return '#eab308'
-  if (s >= 25) return '#f97316'
-  return '#ef4444'
-})
+const scoreColor = computed(() => getScoreColor(form.value.score))
 
 function slugify(text) {
   return text
@@ -208,11 +200,11 @@ function handleSubmit() {
     title: form.value.title.trim(),
     platform: form.value.platform.trim() || 'PC',
     genre: form.value.genre.trim() || 'General',
-    coverUrl: form.value.coverUrl.trim() || 'https://images.igdb.com/igdb/image/upload/t_cover_big/nocover.webp',
+    coverUrl: form.value.coverUrl.trim() || 'https://images.igdb.com/igdb/image/upload/t_cover_big_2x/nocover.webp',
     hoursToFinish: Number(form.value.hoursToFinish) || 0,
     score: Number(form.value.score) || 0,
     status: 'completed',
-    dateCompleted: form.value.dateCompleted || new Date().toISOString().split('T')[0]
+    dateCompleted: form.value.dateCompleted || todayLocal()
   }
 
   emit('add', newGame)
@@ -224,162 +216,130 @@ function handleSubmit() {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(4, 6, 10, 0.82);
-  backdrop-filter: blur(8px);
+  background: color-mix(in srgb, var(--ink) 45%, transparent);
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: var(--space-4);
 }
 
 .modal-card {
-  position: relative;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
+  background: var(--paper);
+  border-top: 3px solid var(--ink);
   max-width: 540px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85);
-  animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  padding: 28px;
+  padding: var(--space-6);
 }
 
 .modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 22px;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 16px;
-}
-
-.modal-title-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.modal-badge-icon {
-  font-size: 1.4rem;
+  margin-bottom: var(--space-5);
 }
 
 .modal-title {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #fff;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 
 .modal-close {
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-secondary);
+  color: var(--ink-soft);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
 }
 
 .modal-close:hover {
-  background: rgba(255, 255, 255, 0.18);
-  color: #fff;
+  color: var(--ink);
 }
 
 .add-game-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-5);
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .form-row {
   display: flex;
-  gap: 14px;
+  gap: var(--space-5);
 }
 
 .flex-1 {
   flex: 1;
+  min-width: 0;
 }
 
-.mt-2 {
-  margin-top: 8px;
+.platform-input {
+  margin-top: var(--space-1);
 }
 
 .form-label {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: var(--space-1);
 }
 
 .req {
-  color: #f87171;
+  color: var(--accent);
 }
 
-.score-preview-badge {
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  font-weight: 700;
-  color: #0b0d13;
-  padding: 2px 7px;
-  border-radius: 4px;
+.score-preview {
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-weight: 600;
 }
 
-.platform-chips-row {
+.presets {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--space-4);
 }
 
-.preset-chip {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  color: var(--text-secondary);
-  padding: 5px 10px;
-  border-radius: var(--radius-sm);
-  font-size: 0.78rem;
-  font-weight: 600;
-  transition: all 0.15s ease;
+.preset {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
 }
 
-.preset-chip:hover {
-  border-color: rgba(255, 255, 255, 0.3);
-  color: #fff;
+.preset:hover {
+  color: var(--ink);
 }
 
-.preset-chip.active {
-  background: rgba(56, 189, 248, 0.15);
-  border-color: var(--accent-cyan);
-  color: var(--accent-cyan);
+.preset.active {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
 }
 
 .form-input {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
-  color: var(--text-primary);
-  font-family: inherit;
-  font-size: 0.88rem;
-  outline: none;
-  transition: all 0.2s ease;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  border-radius: 0;
+  padding: var(--space-2) 0;
+  font-size: var(--text-base);
+}
+
+.form-input::placeholder {
+  color: var(--ink-muted);
 }
 
 .form-input:focus {
-  border-color: var(--accent-cyan);
-  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+  outline: none;
+  border-bottom-color: var(--ink);
 }
 
 .input-with-suffix {
@@ -389,16 +349,14 @@ function handleSubmit() {
 }
 
 .input-with-suffix .form-input {
-  width: 100%;
-  padding-right: 44px;
+  padding-right: 36px;
 }
 
 .input-suffix {
   position: absolute;
-  right: 12px;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
+  right: 0;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
   pointer-events: none;
 }
 
@@ -406,44 +364,41 @@ function handleSubmit() {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 12px;
-  margin-top: 10px;
-  padding-top: 14px;
-  border-top: 1px solid var(--border-color);
+  gap: var(--space-5);
+  padding-top: var(--space-3);
 }
 
 .btn-cancel {
-  padding: 9px 18px;
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--text-secondary);
-  font-weight: 600;
-  font-size: 0.88rem;
-  transition: all 0.15s ease;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
 }
 
 .btn-cancel:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.06);
+  color: var(--ink);
 }
 
 .btn-submit {
-  padding: 9px 20px;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--accent-cyan), #38bdf8);
-  color: #0b0d13;
-  font-weight: 700;
-  font-size: 0.88rem;
-  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
-  transition: all 0.2s ease;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--space-2) var(--space-5);
 }
 
 .btn-submit:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.45);
+  background: var(--accent);
 }
 
-/* Modal Transition */
+@media (max-width: 640px) {
+  .modal-card {
+    padding: var(--space-5);
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+}
+
 .modal-enter-active,
 .modal-leave-active {
   transition: opacity 0.2s ease;

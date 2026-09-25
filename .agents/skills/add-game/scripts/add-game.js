@@ -5,7 +5,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const rootDir = path.resolve(__dirname, '../../..')
+const rootDir = path.resolve(__dirname, '../../../..')
 const gamesJsonPath = path.join(rootDir, 'public/games.json')
 
 function slugify(text) {
@@ -18,10 +18,17 @@ function slugify(text) {
     .replace(/--+/g, '-')
 }
 
+// Today's date as YYYY-MM-DD in the local time zone (toISOString would give UTC)
+function todayLocal() {
+  const d = new Date()
+  const pad = (n) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+}
+
 function main() {
   const args = process.argv.slice(2)
   if (args.length === 0) {
-    console.error('Usage: node add-game.js \'{"title": "...", "score": 90, "hoursToFinish": 30}\'')
+    console.error('Usage: node add-game.js \'{"title": "...", "score": 90, "hoursToFinish": 30, "artwork": "https://... (optional)"}\'')
     process.exit(1)
   }
 
@@ -62,11 +69,12 @@ function main() {
     title: gameData.title.trim(),
     platform: gameData.platform || 'PC',
     genre: gameData.genre || 'General',
-    coverUrl: gameData.coverUrl || 'https://images.igdb.com/igdb/image/upload/t_cover_big/nocover.webp',
+    coverUrl: gameData.coverUrl || 'https://images.igdb.com/igdb/image/upload/t_cover_big_2x/nocover.webp',
+    ...(gameData.artwork ? { artwork: gameData.artwork } : {}),
     hoursToFinish: Number(gameData.hoursToFinish) || 0,
     score: Number(gameData.score),
     status: gameData.status || 'completed',
-    dateCompleted: gameData.dateCompleted || new Date().toISOString().split('T')[0]
+    dateCompleted: gameData.dateCompleted || todayLocal()
   }
 
   // Check if game already exists by id
