@@ -11,3 +11,10 @@ export function formatDate(dateStr, options = { year: 'numeric', month: 'short',
 export function formatNumber(n) {
   return (Number(n) || 0).toLocaleString(LOCALE, { maximumFractionDigits: 1 })
 }
+
+// Today's date as 'YYYY-MM-DD' in the local time zone (toISOString would give UTC).
+export function todayLocal() {
+  const d = new Date()
+  const pad = (n) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+}

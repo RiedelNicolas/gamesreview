@@ -18,6 +18,13 @@ function slugify(text) {
     .replace(/--+/g, '-')
 }
 
+// Today's date as YYYY-MM-DD in the local time zone (toISOString would give UTC)
+function todayLocal() {
+  const d = new Date()
+  const pad = (n) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+}
+
 function main() {
   const args = process.argv.slice(2)
   if (args.length === 0) {
@@ -67,7 +74,7 @@ function main() {
     hoursToFinish: Number(gameData.hoursToFinish) || 0,
     score: Number(gameData.score),
     status: gameData.status || 'completed',
-    dateCompleted: gameData.dateCompleted || new Date().toISOString().split('T')[0]
+    dateCompleted: gameData.dateCompleted || todayLocal()
   }
 
   // Check if game already exists by id

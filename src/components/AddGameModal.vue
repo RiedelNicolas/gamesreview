@@ -145,6 +145,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { scoreColor as getScoreColor } from '../utils/score.js'
+import { todayLocal } from '../utils/format.js'
 
 const props = defineProps({
   show: {
@@ -163,7 +164,7 @@ const form = ref({
   hoursToFinish: null,
   score: null,
   genre: 'General',
-  dateCompleted: new Date().toISOString().split('T')[0],
+  dateCompleted: todayLocal(),
   coverUrl: ''
 })
 
@@ -175,7 +176,7 @@ watch(() => props.show, (isShown) => {
       hoursToFinish: null,
       score: null,
       genre: '',
-      dateCompleted: new Date().toISOString().split('T')[0],
+      dateCompleted: todayLocal(),
       coverUrl: ''
     }
   }
@@ -203,7 +204,7 @@ function handleSubmit() {
     hoursToFinish: Number(form.value.hoursToFinish) || 0,
     score: Number(form.value.score) || 0,
     status: 'completed',
-    dateCompleted: form.value.dateCompleted || new Date().toISOString().split('T')[0]
+    dateCompleted: form.value.dateCompleted || todayLocal()
   }
 
   emit('add', newGame)
