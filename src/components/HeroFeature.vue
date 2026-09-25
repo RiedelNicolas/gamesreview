@@ -2,11 +2,11 @@
   <section class="hero">
     <div class="hero-media">
       <img
-        v-if="!imageFailed"
+        v-if="!coverFailed"
         :src="imageUrl"
         :alt="game.title"
-        :class="{ 'is-cover': !game.artwork }"
-        @error="imageFailed = true"
+        :class="{ 'is-cover': !showArtwork }"
+        @error="onImageError"
       />
     </div>
     <div class="hero-text">
@@ -37,9 +37,21 @@ const props = defineProps({
   }
 })
 
-const imageFailed = ref(false)
-const imageUrl = computed(() => props.game.artwork || props.game.coverUrl)
-watch(imageUrl, () => { imageFailed.value = false })
+// Artwork first; if it is missing or fails, the cover; if that fails too, the empty panel.
+const artworkFailed = ref(false)
+const coverFailed = ref(false)
+const showArtwork = computed(() => Boolean(props.game.artwork) && !artworkFailed.value)
+const imageUrl = computed(() => (showArtwork.value ? props.game.artwork : props.game.coverUrl))
+
+function onImageError() {
+  if (showArtwork.value) artworkFailed.value = true
+  else coverFailed.value = true
+}
+
+watch(() => props.game, () => {
+  artworkFailed.value = false
+  coverFailed.value = false
+})
 </script>
 
 <style scoped>
