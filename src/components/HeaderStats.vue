@@ -6,7 +6,7 @@
     </div>
     <h1 class="title">Game Tracker</h1>
     <p v-if="games.length" class="stats">
-      {{ games.length }} games · {{ formatNumber(totalHours) }} h · avg {{ avgScore }}
+      {{ games.length }} {{ games.length === 1 ? 'game' : 'games' }} · {{ formatNumber(totalHours) }} h<template v-if="avgScore !== null"> · avg {{ avgScore }}</template>
     </p>
   </header>
 </template>
@@ -14,6 +14,7 @@
 <script setup>
 import { computed } from 'vue'
 import { formatNumber } from '../utils/format.js'
+import { isRated } from '../utils/score.js'
 
 const props = defineProps({
   games: {
@@ -28,9 +29,10 @@ const totalHours = computed(() =>
   props.games.reduce((acc, g) => acc + (Number(g.hoursToFinish) || 0), 0)
 )
 
+// null when nothing is rated yet
 const avgScore = computed(() => {
-  const rated = props.games.filter(g => Number(g.score) > 0)
-  if (!rated.length) return 0
+  const rated = props.games.filter(g => isRated(g.score))
+  if (!rated.length) return null
   const total = rated.reduce((acc, g) => acc + Number(g.score), 0)
   return Math.round(total / rated.length)
 })
