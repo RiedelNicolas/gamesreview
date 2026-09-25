@@ -288,7 +288,7 @@ function handleSubmit() {
   font-weight: 500;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: var(--space-1);
 }
 
 .req {
@@ -296,6 +296,7 @@ function handleSubmit() {
 }
 
 .score-preview {
+  margin-left: auto;
   font-family: var(--font-display);
   font-weight: 600;
 }
