@@ -59,9 +59,12 @@ export function useGames() {
   }
 
   function addGame(newGame) {
-    allGames.value.unshift(normalizePlatform(newGame))
-    const extraGames = readLocalGames()
-    extraGames.unshift(newGame)
+    // The new game becomes the featured hero, like add-game.js
+    const featuredGame = { ...newGame, featured: true }
+    allGames.value = allGames.value.map(({ featured, ...rest }) => rest)
+    allGames.value.unshift(normalizePlatform(featuredGame))
+    const extraGames = readLocalGames().map(({ featured, ...rest }) => rest)
+    extraGames.unshift(featuredGame)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(extraGames))
   }
 
