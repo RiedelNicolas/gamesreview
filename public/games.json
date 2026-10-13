@@ -1,5 +1,17 @@
 [
   {
+    "id": "orbitals",
+    "title": "Orbitals",
+    "platform": "Nintendo Switch 2",
+    "genre": "Platformer / Puzzle / Adventure",
+    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coc9r6.webp",
+    "artwork": "https://images.igdb.com/igdb/image/upload/t_1080p/ar6mkg.webp",
+    "hoursToFinish": 8,
+    "score": 81,
+    "status": "completed",
+    "dateCompleted": "2026-10-12"
+  },
+  {
     "id": "resident-evil-village",
     "title": "Resident Evil Village",
     "platform": "Nintendo Switch 2",
