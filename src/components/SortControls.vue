@@ -28,20 +28,6 @@
         aria-label="Search"
         class="search"
       />
-      <select
-        :value="sortBy"
-        @change="$emit('update:sortBy', $event.target.value)"
-        aria-label="Sort by"
-        class="sort"
-      >
-        <option value="date-desc">Newest first</option>
-        <option value="date-asc">Oldest first</option>
-        <option value="score-desc">Highest score</option>
-        <option value="score-asc">Lowest score</option>
-        <option value="hours-desc">Most hours</option>
-        <option value="hours-asc">Fewest hours</option>
-        <option value="title-asc">Title (A–Z)</option>
-      </select>
     </div>
   </div>
 </template>
@@ -51,10 +37,6 @@ defineProps({
   searchQuery: {
     type: String,
     default: ''
-  },
-  sortBy: {
-    type: String,
-    default: 'date-desc'
   },
   platforms: {
     type: Array,
@@ -66,7 +48,7 @@ defineProps({
   }
 })
 
-defineEmits(['update:searchQuery', 'update:sortBy', 'update:selectedPlatform'])
+defineEmits(['update:searchQuery', 'update:selectedPlatform'])
 </script>
 
 <style scoped>
@@ -116,8 +98,7 @@ defineEmits(['update:searchQuery', 'update:sortBy', 'update:selectedPlatform'])
   gap: var(--space-4);
 }
 
-.search,
-.sort {
+.search {
   font-size: var(--text-sm);
   background: transparent;
   border: none;
@@ -134,14 +115,9 @@ defineEmits(['update:searchQuery', 'update:sortBy', 'update:selectedPlatform'])
   color: var(--ink-muted);
 }
 
-.search:focus,
-.sort:focus {
+.search:focus {
   outline: none;
   border-bottom-color: var(--ink);
-}
-
-.sort {
-  cursor: pointer;
 }
 
 @media (max-width: 820px) {

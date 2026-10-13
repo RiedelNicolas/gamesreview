@@ -25,7 +25,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { isRated, scoreColor, UNRATED_LABEL } from '../utils/score.js'
-import { formatDate, formatNumber } from '../utils/format.js'
+import { formatNumber } from '../utils/format.js'
 
 const props = defineProps({
   game: {
@@ -37,7 +37,7 @@ const props = defineProps({
 const imageFailed = ref(false)
 
 const hoverInfo = computed(() =>
-  [props.game.genre, formatDate(props.game.dateCompleted)].filter(Boolean).join(' · ')
+  props.game.genre || ''
 )
 </script>
 

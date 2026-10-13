@@ -14,7 +14,7 @@
         <p class="kicker">Latest played</p>
         <h2 class="hero-title">{{ game.title }}</h2>
         <p class="hero-byline">
-          {{ formatNumber(game.hoursToFinish) }} h · {{ game.platform }}<template v-if="game.dateCompleted"> · {{ formatDate(game.dateCompleted, { year: 'numeric', month: 'long', day: 'numeric' }) }}</template>
+          {{ formatNumber(game.hoursToFinish) }} h · {{ game.platform }}
         </p>
       </div>
       <p v-if="isRated(game.score)" class="hero-score" :style="{ color: scoreColor(game.score) }">
@@ -28,7 +28,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { isRated, scoreColor, UNRATED_LABEL } from '../utils/score.js'
-import { formatDate, formatNumber } from '../utils/format.js'
+import { formatNumber } from '../utils/format.js'
 
 const props = defineProps({
   game: {

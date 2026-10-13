@@ -1,6 +1,5 @@
 import { ref, computed } from 'vue'
 import { isRated } from '../utils/score.js'
-import { parseLocalDate } from '../utils/format.js'
 
 const STORAGE_KEY = 'local_custom_games'
 
@@ -34,7 +33,6 @@ export function useGames() {
   const error = ref(null)
 
   const searchQuery = ref('')
-  const sortBy = ref('date-desc')
   const selectedPlatform = ref('')
 
   async function fetchGames() {
@@ -61,9 +59,12 @@ export function useGames() {
   }
 
   function addGame(newGame) {
-    allGames.value.unshift(normalizePlatform(newGame))
-    const extraGames = readLocalGames()
-    extraGames.unshift(newGame)
+    // The new game becomes the featured hero, like add-game.js
+    const featuredGame = { ...newGame, featured: true }
+    allGames.value = allGames.value.map(({ featured, ...rest }) => rest)
+    allGames.value.unshift(normalizePlatform(featuredGame))
+    const extraGames = readLocalGames().map(({ featured, ...rest }) => rest)
+    extraGames.unshift(featuredGame)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(extraGames))
   }
 
@@ -75,19 +76,11 @@ export function useGames() {
     return Array.from(set).sort()
   })
 
-  // Most recently played game, by completion date; invalid dates are ignored
-  const latestGame = computed(() => {
-    let latest = null
-    let latestTime = -Infinity
-    for (const g of allGames.value) {
-      const date = parseLocalDate(g.dateCompleted)
-      if (date && date.getTime() > latestTime) {
-        latest = g
-        latestTime = date.getTime()
-      }
-    }
-    return latest
-  })
+  // Featured game for the hero: the entry with `featured: true`,
+  // falling back to the first entry in the list
+  const latestGame = computed(() =>
+    allGames.value.find(g => g.featured === true) || allGames.value[0] || null
+  )
 
   const processedGames = computed(() => {
     let list = [...allGames.value]
@@ -105,30 +98,13 @@ export function useGames() {
       list = list.filter(g => g.platform && g.platform.trim() === selectedPlatform.value)
     }
 
+    // Always by score, highest first; unrated games last; ties by title A–Z
     list.sort((a, b) => {
-      // Unrated games go last when sorting by score, in either direction
-      if (sortBy.value === 'score-desc' || sortBy.value === 'score-asc') {
-        const byRated = Number(isRated(b.score)) - Number(isRated(a.score))
-        if (byRated) return byRated
-      }
-      switch (sortBy.value) {
-        case 'date-desc':
-          return (b.dateCompleted || '').localeCompare(a.dateCompleted || '')
-        case 'date-asc':
-          return (a.dateCompleted || '').localeCompare(b.dateCompleted || '')
-        case 'score-desc':
-          return (Number(b.score) || 0) - (Number(a.score) || 0)
-        case 'score-asc':
-          return (Number(a.score) || 0) - (Number(b.score) || 0)
-        case 'hours-desc':
-          return (Number(b.hoursToFinish) || 0) - (Number(a.hoursToFinish) || 0)
-        case 'hours-asc':
-          return (Number(a.hoursToFinish) || 0) - (Number(b.hoursToFinish) || 0)
-        case 'title-asc':
-          return (a.title || '').localeCompare(b.title || '')
-        default:
-          return 0
-      }
+      const byRated = Number(isRated(b.score)) - Number(isRated(a.score))
+      if (byRated) return byRated
+      const byScore = (Number(b.score) || 0) - (Number(a.score) || 0)
+      if (byScore) return byScore
+      return (a.title || '').localeCompare(b.title || '')
     })
 
     return list
@@ -139,7 +115,6 @@ export function useGames() {
     loading,
     error,
     searchQuery,
-    sortBy,
     selectedPlatform,
     availablePlatforms,
     latestGame,

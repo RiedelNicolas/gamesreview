@@ -381,7 +381,8 @@
     "hoursToFinish": 8,
     "score": 81,
     "status": "completed",
-    "dateCompleted": "2026-10-12"
+    "dateCompleted": "2026-10-12",
+    "featured": true
   },
   {
     "id": "super-mario-galaxy-2",

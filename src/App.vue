@@ -14,7 +14,6 @@
 
       <SortControls
         v-model:searchQuery="searchQuery"
-        v-model:sortBy="sortBy"
         v-model:selectedPlatform="selectedPlatform"
         :platforms="availablePlatforms"
       />
@@ -52,7 +51,6 @@ const {
   loading,
   error,
   searchQuery,
-  sortBy,
   selectedPlatform,
   availablePlatforms,
   latestGame,
