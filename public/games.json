@@ -1,5 +1,29 @@
 [
   {
+    "id": "orbitals",
+    "title": "Orbitals",
+    "platform": "Nintendo Switch 2",
+    "genre": "Platformer / Puzzle / Adventure",
+    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coc9r6.webp",
+    "artwork": "https://images.igdb.com/igdb/image/upload/t_1080p/ar6mkg.webp",
+    "hoursToFinish": 8,
+    "score": 81,
+    "status": "completed",
+    "dateCompleted": "2026-10-12"
+  },
+  {
+    "id": "super-mario-galaxy-2",
+    "title": "Super Mario Galaxy 2",
+    "platform": "Nintendo Switch 2",
+    "genre": "3D Platformer / Adventure",
+    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co21tl.webp",
+    "artwork": "https://images.igdb.com/igdb/image/upload/t_1080p/ar5j6x.webp",
+    "hoursToFinish": 15,
+    "score": 97,
+    "status": "completed",
+    "dateCompleted": "2026-10-12"
+  },
+  {
     "id": "resident-evil-village",
     "title": "Resident Evil Village",
     "platform": "Nintendo Switch 2",
@@ -19,7 +43,7 @@
     "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cobtwh.webp",
     "artwork": "https://images.igdb.com/igdb/image/upload/t_1080p/ar4vh4.webp",
     "hoursToFinish": 15,
-    "score": 0,
+    "score": 94,
     "status": "completed",
     "dateCompleted": "2026-03-29"
   },
@@ -31,7 +55,7 @@
     "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cob9kr.webp",
     "artwork": "https://images.igdb.com/igdb/image/upload/t_1080p/ar3m4s.webp",
     "hoursToFinish": 11,
-    "score": 0,
+    "score": 85,
     "status": "completed",
     "dateCompleted": "2026-03-12"
   },
