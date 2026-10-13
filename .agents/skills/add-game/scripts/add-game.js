@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.resolve(__dirname, '../../../..')
-const gamesJsonPath = path.join(rootDir, 'public/games.json')
+const gamesJsonPath = process.env.GAMES_JSON_PATH || path.join(rootDir, 'public/games.json')
 
 function slugify(text) {
   return text
@@ -76,6 +76,10 @@ function main() {
     status: gameData.status || 'completed',
     dateCompleted: gameData.dateCompleted || todayLocal()
   }
+
+  // The new or updated game becomes the featured hero: clear the flag everywhere else
+  games = games.map(({ featured, ...rest }) => rest)
+  newEntry.featured = true
 
   // Check if game already exists by id
   const existingIdx = games.findIndex(g => g.id === newEntry.id)

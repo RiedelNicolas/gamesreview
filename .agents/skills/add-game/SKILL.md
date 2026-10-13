@@ -24,7 +24,8 @@ Every entry in `public/games.json` has the following structure:
   "hoursToFinish": 45,
   "score": 92,
   "status": "completed",
-  "dateCompleted": "YYYY-MM-DD"
+  "dateCompleted": "YYYY-MM-DD",
+  "featured": true
 }
 ```
 
@@ -44,7 +45,7 @@ Every entry in `public/games.json` has the following structure:
 Always open the image and check it shows the right game before saving it.
 
 ### Sourcing Artwork URLs (optional)
-`artwork` is a landscape image (key art or a screenshot, roughly 16:9) used when the game is the featured "latest played" entry. If it is missing, the cover is used instead.
+`artwork` is a landscape image (key art or a screenshot, roughly 16:9) used when the game is the featured entry (hero). If it is missing, the cover is used instead.
 1. **IGDB artwork**: `https://images.igdb.com/igdb/image/upload/t_1080p/<ARTWORK_ID>.webp` (artwork ids start with `ar`)
 2. **IGDB screenshot**: `https://images.igdb.com/igdb/image/upload/t_1080p/<SCREENSHOT_ID>.webp` (ids usually start with `sc`)
 
@@ -62,6 +63,9 @@ If the user didn't supply all details, ask for the missing ones:
 - **Completion Date**: Default to today's date (`YYYY-MM-DD`) if not specified.
 - **Cover Image**: Direct image URL (offer to find one if needed).
 - **Artwork** (optional): Landscape image URL for the featured spot.
+
+### Featured Game (`featured`)
+Exactly one entry should have `"featured": true`; it is shown as the hero at the top (without one, the first entry is used). When a new game is added, `featured` moves to it: remove it from every other entry and set it on the new one. The helper script does this automatically. The grid itself is always sorted by score, so `dateCompleted` is not used for ordering or display.
 
 ### Step 2: Register Game Entry
 You can either:

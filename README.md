@@ -42,6 +42,8 @@ Games live in [`public/games.json`](public/games.json):
 - `score` of `0` means the game hasn't been rated yet; it shows as "Unrated".
 - `coverUrl` is a portrait cover (3:4). IGDB covers work well: `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/<image_id>.webp`.
 - `artwork` is optional: a landscape image (key art or screenshot) shown when the game is the featured one at the top. Without it the cover is used. IGDB: `https://images.igdb.com/igdb/image/upload/t_1080p/<image_id>.webp`.
+- `featured` is optional: the one entry with `"featured": true` is shown at the top (hero). Without one, the first entry is used. Only one game should have it; when a new game is added, `featured` moves to it (the helper script below does this automatically).
+- The grid is always sorted by score, highest first, with unrated games last and ties by title A–Z. `dateCompleted` is stored but not shown or used for ordering.
 - Keep platform names consistent (for example always "Nintendo Switch 2"), since each distinct name becomes a filter tab.
 
 To append a game from the command line there is a helper used by the `add-game` agent skill:
