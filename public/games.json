@@ -1,5 +1,16 @@
 [
   {
+    "id": "metal-gear-solid-2-sons-of-liberty",
+    "title": "Metal Gear Solid 2: Sons of Liberty",
+    "platform": "PlayStation 2",
+    "genre": "Tactical Shooter / Adventure",
+    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co5e1c.webp",
+    "hoursToFinish": 16,
+    "score": 96,
+    "status": "completed",
+    "dateCompleted": "2026-10-13"
+  },
+  {
     "id": "orbitals",
     "title": "Orbitals",
     "platform": "Nintendo Switch 2",
@@ -79,7 +90,7 @@
     "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coaih8.webp",
     "artwork": "https://images.igdb.com/igdb/image/upload/t_1080p/ar3nla.webp",
     "hoursToFinish": 75,
-    "score": 90,
+    "score": 94,
     "status": "completed",
     "dateCompleted": "2026-01-04"
   },
@@ -91,7 +102,7 @@
     "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cobd1q.webp",
     "artwork": "https://images.igdb.com/igdb/image/upload/t_1080p/ar3p7p.webp",
     "hoursToFinish": 20,
-    "score": 95,
+    "score": 89,
     "status": "completed",
     "dateCompleted": "2025-11-22"
   },
