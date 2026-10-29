@@ -1,5 +1,18 @@
 [
   {
+    "id": "metal-gear-solid-4-guns-of-the-patriots",
+    "title": "Metal Gear Solid 4: Guns of the Patriots",
+    "platform": "Nintendo Switch 2",
+    "genre": "Tactical Shooter / Adventure",
+    "coverUrl": "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co5eju.webp",
+    "artwork": "https://images.igdb.com/igdb/image/upload/t_1080p/z5dmddrmgmclmlbq1t0m.webp",
+    "hoursToFinish": 25.5,
+    "score": 96,
+    "status": "completed",
+    "dateCompleted": "2026-10-28",
+    "featured": true
+  },
+  {
     "id": "resident-evil-2",
     "title": "Resident Evil 2",
     "platform": "PC",
@@ -381,8 +394,7 @@
     "hoursToFinish": 8,
     "score": 81,
     "status": "completed",
-    "dateCompleted": "2026-10-12",
-    "featured": true
+    "dateCompleted": "2026-10-12"
   },
   {
     "id": "super-mario-galaxy-2",
